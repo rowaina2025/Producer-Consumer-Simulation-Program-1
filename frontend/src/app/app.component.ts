@@ -11,6 +11,7 @@ import { Stage } from 'konva/lib/Stage';
 export class AppComponent implements OnInit{
   stage!: Stage;
   layer!: Layer;
+  draw:boolean=false
   title = 'frontend';
   ngOnInit(): void {
     this.stage = new Stage({
@@ -24,6 +25,8 @@ export class AppComponent implements OnInit{
 
   drawCircle() {
     
+    this.draw=true
+    if(this.draw){
     this.stage.on("mousedown",() => {
       var circle = new Konva.Circle({
         x: this.stage?.getRelativePointerPosition()?.x,
@@ -34,14 +37,17 @@ export class AppComponent implements OnInit{
         strokeWidth: 4,
         draggable:true,
       })
-    
+      
       this.layer.add(circle);
       this.stage.add(this.layer);
+      this.draw=false
     });
-    
+  }
   }
   
   drawRectangle() {///////////////////////////////\
+    this.draw=true
+    if(this.draw){
     this.stage.on("mousedown",() => {
       var circle = new Konva.Rect({
         x: this.stage?.getRelativePointerPosition()?.x,
@@ -55,7 +61,9 @@ export class AppComponent implements OnInit{
       })
       this.layer.add(circle);
       this.stage.add(this.layer);
+      this.draw=false
     });
+  }
 }
 
 
