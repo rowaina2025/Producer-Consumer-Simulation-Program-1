@@ -13,4 +13,8 @@ public class CareTaker {
     public Memento get(int index) {
         return memntoList.get(index);
     }
+
+    public void clear() {
+        memntoList.clear();
+    }
 }
