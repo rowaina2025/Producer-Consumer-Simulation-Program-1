@@ -23,48 +23,57 @@ export class AppComponent implements OnInit{
     this.stage.add(this.layer);
   }
 
-  drawCircle() {
-    
-    this.draw=true
-    if(this.draw){
-    this.stage.on("mousedown",() => {
-      var circle = new Konva.Circle({
-        x: this.stage?.getRelativePointerPosition()?.x,
-        y: this.stage?.getRelativePointerPosition()?.y,
-        radius: 50,
-        fill: 'white',
-        stroke: 'black',
-        strokeWidth: 4,
-        draggable:true,
-      })
-      
-      this.layer.add(circle);
-      this.stage.add(this.layer);
-      this.draw=false
-    });
-  }
+  drawCircle(){
+    var circle = new Konva.Circle({
+      x: 200,
+      y: 100,
+      width: 150,
+      fill: 'white',
+      stroke:"black",
+      strokeWidth:5,
+      innerRadius: 5,
+      draggable: true
+    }); 
+    this.layer.add(circle);
+    this.stage.add(this.layer);
   }
   
-  drawRectangle() {///////////////////////////////\
-    this.draw=true
-    if(this.draw){
-    this.stage.on("mousedown",() => {
-      var circle = new Konva.Rect({
-        x: this.stage?.getRelativePointerPosition()?.x,
-        y: this.stage?.getRelativePointerPosition()?.y,
-        width: 100,
-        height: 50,
-        fill: 'white',
-        stroke: 'black',
-        strokeWidth: 4,
-        draggable:true,
-      })
-      this.layer.add(circle);
-      this.stage.add(this.layer);
-      this.draw=false
-    });
+  drawRectangle(){
+    var rectangle = new Konva.Rect({
+      x: 200,
+      y: 100,
+      width: 150,
+      height: 90,
+       strokeWidth:5,
+      fill: "white",
+      stroke:"black",
+      name: 'rect',
+      draggable: true,
+  });
+  this.layer.add(rectangle);
+  this.stage.add(this.layer);
   }
-}
+
+  drawLine(){
+  //   let start:Konva.Shape
+  //   let end
+  //   let draw=false
+  //   this.stage.on('mousedown', (e)=> {
+  //   start=e.target as Konva.Shape
+  //   console.log(e.target)
+  //   draw=true
+  //   var arrow = new Konva.Arrow({
+  //     points: [start.position, circle.getY(), circleA.getX(), circleA.getY()],
+  //     pointerLength: 10,
+  //     pointerWidth: 10,
+  //     fill: 'black',
+  //     stroke: 'black',
+  //     strokeWidth: 4
+  //   });
+  // });
+
+  
+  }
 
 
 }
