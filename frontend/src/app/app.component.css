@@ -1,37 +1,32 @@
-.toolBar{
-height: 100px;
-width: 100%;
-background-color: rgb(72, 8, 84);   
+.toolBar {
+    height: 100px;
+    width: 100%;
+    background-color: rgb(72, 8, 84);
 }
-button{
+
+button {
     position: relative;
     height: 40px;
-    width: auto;
+    width: 10%;
     display: block;
     font-size: 18px;
     border: 2px solid rgb(144, 143, 158);
-    /* background-image: linear-gradient(to bottom, rgba(79, 125, 232, 0.85), rgba(32, 21, 90, 0.85));
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover; */
     border-radius: 20px;
     color: rgb(0, 0, 0);
-    text-decoration: none;
     padding: 6px;
-    z-index: 1;
+    margin-right: 5%;
+    margin-left: 1.5%;
     cursor: pointer;
     float: left;
     top: 30px;
-
 }
-button:hover{
+
+button:hover {
     background-color: rgb(225, 191, 231);
     font-weight: 500;
 }
-.container{
+
+.container {
     width: 100%;
     height: 100%;
 }

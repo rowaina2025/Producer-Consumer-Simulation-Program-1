@@ -11,7 +11,7 @@ import { Stage } from 'konva/lib/Stage';
 export class AppComponent implements OnInit{
   stage!: Stage;
   layer!: Layer;
-  draw:boolean=false
+  shape: string = '';
   title = 'frontend';
   ngOnInit(): void {
     this.stage = new Stage({
@@ -23,57 +23,54 @@ export class AppComponent implements OnInit{
     this.stage.add(this.layer);
   }
 
-  drawCircle(){
-    var circle = new Konva.Circle({
-      x: 200,
-      y: 100,
-      width: 150,
-      fill: 'white',
-      stroke:"black",
-      strokeWidth:5,
-      innerRadius: 5,
-      draggable: true
-    }); 
-    this.layer.add(circle);
-    this.stage.add(this.layer);
-  }
-  
-  drawRectangle(){
-    var rectangle = new Konva.Rect({
-      x: 200,
-      y: 100,
-      width: 150,
-      height: 90,
-       strokeWidth:5,
-      fill: "white",
-      stroke:"black",
-      name: 'rect',
-      draggable: true,
-  });
-  this.layer.add(rectangle);
-  this.stage.add(this.layer);
+  addMachine() {
+    this.shape = 'circle'
+    this.stage.on("mousedown",(e) => {
+      if(e.target instanceof Konva.Circle) {/*select shape*/}
+      else if(this.shape == 'circle'){
+        this.drawShape('circle')
+        this.shape = ''
+      }
+    });
   }
 
-  drawLine(){
-  //   let start:Konva.Shape
-  //   let end
-  //   let draw=false
-  //   this.stage.on('mousedown', (e)=> {
-  //   start=e.target as Konva.Shape
-  //   console.log(e.target)
-  //   draw=true
-  //   var arrow = new Konva.Arrow({
-  //     points: [start.position, circle.getY(), circleA.getX(), circleA.getY()],
-  //     pointerLength: 10,
-  //     pointerWidth: 10,
-  //     fill: 'black',
-  //     stroke: 'black',
-  //     strokeWidth: 4
-  //   });
-  // });
-
-  
+  addProducer() {
+    this.shape = 'rect'
+    this.stage.on("mousedown",(e) => {
+      if(e.target instanceof Konva.Rect) {/*select shape*/}
+      else if(this.shape == 'rect'){
+        this.drawShape('rect')
+        this.shape = ''
+      }
+    });
   }
 
-
+  drawShape(shape: string) {
+    if(shape == 'circle') {
+      let circle = new Konva.Circle({
+        x: this.stage?.getRelativePointerPosition()?.x,
+        y: this.stage?.getRelativePointerPosition()?.y,
+        radius: 50,
+        fill: 'white',
+        stroke: 'black',
+        strokeWidth: 4,
+        draggable:true,
+      })
+      this.layer.add(circle);
+      this.stage.add(this.layer);
+    } else if(shape == 'rect') {
+      let rect = new Konva.Rect({
+        x: this.stage?.getRelativePointerPosition()?.x,
+        y: this.stage?.getRelativePointerPosition()?.y,
+        width: 100,
+        height: 50,
+        fill: 'white',
+        stroke: 'black',
+        strokeWidth: 4,
+        draggable:true,
+      })
+      this.layer.add(rect);
+      this.stage.add(this.layer);
+    }
+  }
 }
