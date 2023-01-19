@@ -4,6 +4,9 @@ import com.example.ProducerConsumer.model.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 public class ProducerConsumerApplication {
 
@@ -19,18 +22,23 @@ public class ProducerConsumerApplication {
         Consumer m2 = new Machine(500, countM++, queue1, queue2);
         Consumer m3 = new Machine(700, countM++, queue2, queue3);
         Consumer m4 = new Machine(100, countM++, queue3, queue4);
-        Producer p = new Producer(queue1);
+
+        List<Product> products = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
             try {
-                p.addProduct(new Product(i, null));
+                products.add(new Product(i, null));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        Producer p = new Producer(queue1, products);
+        Thread prod = new Thread(p);
         Thread c1 = new Thread(m1);
         Thread c2 = new Thread(m2);
         Thread c3 = new Thread(m3);
         Thread c4 = new Thread(m4);
+
+        prod.start();
         c1.start();
         System.out.println("c1 started");
         c2.start();
