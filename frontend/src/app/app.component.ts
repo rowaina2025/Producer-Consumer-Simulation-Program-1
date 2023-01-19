@@ -30,6 +30,7 @@ export class AppComponent implements OnInit{
       else if(this.shape == 'circle'){
         this.drawShape('circle')
         this.shape = ''
+        //TODO do your implementation on adding new machine
       }
     });
   }
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit{
       else if(this.shape == 'rect'){
         this.drawShape('rect')
         this.shape = ''
+        //TODO do your implementation on adding new producer
       }
     });
   }
