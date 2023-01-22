@@ -1,18 +1,14 @@
 package com.example.ProducerConsumer;
 
-import com.example.ProducerConsumer.model.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class ProducerConsumerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ProducerConsumerApplication.class, args);
-        int countQ = 0;
+        /*int countQ = 0;
         int countM = 0;
         BlockingQueue<Product> queue1 = new BlockingQueue<>(countQ++);
         BlockingQueue<Product> queue2 = new BlockingQueue<>(countQ++);
@@ -49,7 +45,7 @@ public class ProducerConsumerApplication {
 
         c4.start();
         System.out.println("c4 started");
-
+*/
 
     }
 

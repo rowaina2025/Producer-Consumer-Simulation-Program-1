@@ -1,12 +1,15 @@
 package com.example.ProducerConsumer.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
-public class BlockingQueue<Product> {
+public class BlockingQueue<Product> implements Observable {
 
     private int num;
     private Queue<Product> queue = new LinkedList<Product>();
+    private List<Observer> observers = new ArrayList<>();
 
     public BlockingQueue(int num) {
         this.num = num;
@@ -14,18 +17,14 @@ public class BlockingQueue<Product> {
 
     public synchronized void put(Product element) {
         queue.add(element);
-        //notify();
-        // will be substituted by observer later
-        notifyAll(); //for multiple producer/consumer threads
+        notifyObservers(); //for multiple producer/consumer threads
     }
 
     public synchronized Product take() throws InterruptedException {
         while (queue.isEmpty()) {
             wait();
         }
-
         Product item = queue.remove();
-        //notify(); // notifyAll() for multiple producer/consumer threads
         return item;
     }
 
@@ -43,6 +42,23 @@ public class BlockingQueue<Product> {
 
     public void setQueue(Queue<Product> queue) {
         this.queue = queue;
+    }
+
+    public void attach(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    public void detach(Observer observer) {
+        this.observers.remove(observer);
+    }
+
+    public void notifyObservers() {
+        for (Observer observer : observers)
+            observer.update();
+    }
+
+    public boolean getState() {
+        return queue.isEmpty();
     }
 }
 
