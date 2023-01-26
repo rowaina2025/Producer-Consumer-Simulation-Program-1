@@ -69,17 +69,40 @@ export class AppComponent implements OnInit{
   //   });
   // }
   addLine(){
+    let shape1:any
+    let shape2:any
+    let first_pointx:any
+    let first_pointy:any
+    let second_pointx :any
+    let second_pointy:any
     let producer= document.getElementById("from") as HTMLInputElement
     let machine= document.getElementById("to") as HTMLInputElement
+    console.log(this.arr_of_Producers[parseInt(producer.value[1])].attrs.x)
+    console.log(machine.value[1])
+    if(producer.value[0] =='Q'&& machine.value[0]=='M'){
+      shape1=this.arr_of_Producers[parseInt(producer.value[1])]
+      shape2=this.arr_of_Machines[parseInt(machine.value[1])]
+      first_pointx =  (shape1.attrs.x * 2+shape1.attrs.width)/2 + shape1.attrs.width/2
+      first_pointy =  (shape1.attrs.y * 2+shape1.attrs.height)/2
+      second_pointx = (shape2.attrs.x * 2+shape2.attrs.width)/2 - shape2.attrs.width/2
+      second_pointy = (shape2.attrs.y * 2+shape2.attrs.height)/2
+    } else{
+      shape1=this.arr_of_Machines[parseInt(machine.value[1])]
+      shape2=this.arr_of_Producers[parseInt(producer.value[1])]
+      first_pointx =  (shape1.attrs.x * 2+shape1.attrs.width)/2 - shape1.attrs.width/2
+      first_pointy =  (shape1.attrs.y * 2+shape1.attrs.height)/2
+      second_pointx = (shape2.attrs.x * 2+shape2.attrs.width)/2 + shape2.attrs.width/2
+      second_pointy = (shape2.attrs.y * 2+shape2.attrs.height)/2
+    }
+    console.log(shape1.attrs.width)
+    let arrow = new Konva.Arrow({
+            points: [first_pointx,first_pointy,second_pointx,second_pointy],
+            stroke: 'black',
+            fill: 'black'
+          });
 
-    // let arrow = new Konva.Arrow({
-    //         points: [x, y],
-    //         stroke: 'black',
-    //         fill: 'black'
-    //       });
-
-    //       this.layer.add(this.konva);
-    //       this.layer.batchDraw()
+          this.layer.add( arrow);
+          this.layer.batchDraw()
       
     
     
@@ -103,19 +126,21 @@ export class AppComponent implements OnInit{
         x: this.stage?.getRelativePointerPosition()?.x,
         y: this.stage?.getRelativePointerPosition()?.y,
         draggable:true,
+        width: 50,
+        height:50,
       })
       consumer.add(
         new Konva.Tag({
           fill: 'blue',
-          cornerRadius: 70
+          cornerRadius: 50
         })
       )
       consumer.add(
         new Konva.Text({
           text: 'M'+ this.Machine_num as string,
           padding: 10,
-          width: 100,
-          height: 50,
+          width: 50,
+          height:50,
           fill: 'white',
           fontSize: 20,
           align: 'center',
@@ -130,7 +155,8 @@ export class AppComponent implements OnInit{
         x: this.stage?.getRelativePointerPosition()?.x,
         y: this.stage?.getRelativePointerPosition()?.y,
         draggable:true,
-
+        width: 50,
+        height:50,
       })
       producer.add(
         new Konva.Tag({
@@ -141,7 +167,7 @@ export class AppComponent implements OnInit{
         new Konva.Text({
           text: 'Q'+ this.Producer_num as string,
           padding: 10,
-          width: 70,
+          width: 50,
           height: 50,
           fill: 'white',
           fontSize: 20,
