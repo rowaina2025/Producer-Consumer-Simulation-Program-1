@@ -4,6 +4,8 @@ import com.example.ProducerConsumer.model.BlockingQueue;
 import com.example.ProducerConsumer.model.Machine;
 import com.example.ProducerConsumer.model.Producer;
 import com.example.ProducerConsumer.model.Product;
+import com.example.ProducerConsumer.snap_shot.CareTaker;
+import com.example.ProducerConsumer.snap_shot.Originator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +16,20 @@ public class PCService {
     List<Product> products = new ArrayList<>();
     List<Thread> threads = new ArrayList<>();
 
+    CareTaker PCCareTaker = new CareTaker();
+
+    Originator PCOriginator = new Originator();
+
     int pCount = 0;
     int mCount = 0;
 
-    public void addProduct(Product product) { //take num return array
+    public void addProducts(Integer productCount) { //take num return array
         //TODO add random number and color
-        products.add(product);
+        for(int i = 0; i < productCount; i++) {
+            products.add(new Product(0, "555555"));
+            PCOriginator.setStateProducer(new Producer(queues.get(0), products));
+            PCCareTaker.add(PCCareTaker.get(pCount++));
+        }
     }
 
     public void addMachine(Machine machine) {
@@ -36,6 +46,10 @@ public class PCService {
         if (direction) {
             //     machines.get(machineNo).setT
         }
+    }
+
+    public List<Product> getProducts() {
+        return products;
     }
 
     public void start() {

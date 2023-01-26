@@ -5,7 +5,11 @@ import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
+<<<<<<< Updated upstream
     AppComponent,
+=======
+    AppComponent
+>>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,

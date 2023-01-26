@@ -14,10 +14,10 @@ export class AppComponent implements OnInit{
   shape: string = '';
   title = 'frontend';
   konva: any;
-  Machine_num=-1
-  Producer_num=-1
-  arr_of_Machines:Array<Konva.Label> =[]
-  arr_of_Producers:Array<Konva.Label> =[]
+  Machine_num = -1
+  Producer_num = -1
+  arr_of_Machines:Array<Konva.Label> = []
+  arr_of_Producers:Array<Konva.Label> = []
   ngOnInit(): void {
     this.stage = new Stage({
       container: "container",
@@ -35,11 +35,12 @@ export class AppComponent implements OnInit{
       else if(this.shape == 'circle'){
         this.drawShape('circle')
         this.shape = ''
-        //TODO do your implementation on adding new machine
+        //TODO send to back
       }
     });
   }
 
+<<<<<<< Updated upstream
   addLine(){
     let shape1:any
     let shape2:any
@@ -73,7 +74,19 @@ export class AppComponent implements OnInit{
           this.layer.add(arrow)
           from.value=''
           to.value=''
+=======
+  addLine(from: string, to: string){
+    // let arrow = new Konva.Arrow({
+    //         points: [x, y],
+    //         stroke: 'black',
+    //         fill: 'black'
+    //       });
+
+    //       this.layer.add(this.konva);
+    //       this.layer.batchDraw()
+>>>>>>> Stashed changes
   }
+
   addProducer() {
     this.shape = 'rect'
     this.stage.on("mousedown",(e) => {
@@ -81,7 +94,7 @@ export class AppComponent implements OnInit{
       else if(this.shape == 'rect'){
         this.drawShape('rect')
         this.shape = ''
-        //TODO do your implementation on adding new producer
+        //TODO send to back
       }
     });
   }

@@ -1,7 +1,7 @@
 .toolBar {
     height: 100px;
     width: 100%;
-    background-color: rgb(72, 8, 84);
+    background-color: rgb(165, 72, 182);
 }
 
 button {
@@ -20,6 +20,10 @@ button {
     top: 30px;
 }
 
+.textBox {
+    margin-left: 2%;
+}
+
 button:hover {
     background-color: rgb(225, 191, 231);
     font-weight: 500;
@@ -29,7 +33,8 @@ button:hover {
     width: 100%;
     height: 100%;
 }
-input{
+
+input {
     position: relative;
     height: 35px;
     width: 7%;
