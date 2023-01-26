@@ -1,15 +1,25 @@
 package com.example.ProducerConsumer.snap_shot;
 
 import com.example.ProducerConsumer.model.Machine;
+import com.example.ProducerConsumer.model.Producer;
 
 public class Memento {
-    private Machine state;
+    private Machine machineState;
+    private Producer producerState;
 
-    public Memento(Machine state) {
-        this.state = state;
+    public Memento(Machine machineState) {
+        this.machineState = machineState;
     }
 
-    public Machine getState() {
-        return state;
+    public Memento(Producer producerState) {
+        this.producerState = producerState;
+    }
+
+    public Machine getStateMachine() {
+        return machineState;
+    }
+
+    public Producer getStateProducer() {
+        return producerState;
     }
 }

@@ -101,10 +101,6 @@ export class AppComponent implements OnInit{
             fill: 'black'
           });
 
-          this.layer.add( arrow);
-          this.layer.batchDraw()
-      
-    
     
   }
   addProducer() {
