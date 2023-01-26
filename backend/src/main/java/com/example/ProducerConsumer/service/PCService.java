@@ -17,7 +17,7 @@ public class PCService {
     int pCount = 0;
     int mCount = 0;
 
-    public void addProduct(Product product) {
+    public void addProduct(Product product) { //take num return array
         //TODO add random number and color
         products.add(product);
     }

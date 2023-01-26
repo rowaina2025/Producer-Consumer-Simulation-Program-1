@@ -13,6 +13,9 @@ export class AppComponent implements OnInit{
   layer!: Layer;
   shape: string = '';
   title = 'frontend';
+  konva: any;
+  Machine_num=-1
+  Producer_num=-1
   ngOnInit(): void {
     this.stage = new Stage({
       container: "container",
@@ -34,69 +37,35 @@ export class AppComponent implements OnInit{
       }
     });
   }
-  Connect(){
-    this.shape = 'arrow'
-    // this.stage.on("mousedown",(e) => {
-    //   if(e.target instanceof Konva.Circle) {/*select shape*/}
-    //   else if(this.shape == 'circle'){
-    //     this.drawShape('circle')
-    //     this.shape = ''
-    //     //TODO do your implementation on adding new machine
-    //   }
-    // });
-
-  let isdraw=false
-  let move=false
-  let arrow:any
-  let x:any,y:any
-  let pos:any
-    this.stage.on('mousedown', (e) => {
-      isdraw=true
-      if(this.shape == 'arrow') {
-        move = false
-        isdraw = true;
-        x = e.target.getRelativePointerPosition().x;
-        y = e.target.getRelativePointerPosition().y
-        // const pos = this.stage.getRelativePointerPosition();
-        arrow = new Konva.Arrow({
-          x: this.stage?.getRelativePointerPosition()?.x,
-          y: this.stage?.getRelativePointerPosition()?.y,
-          points: [x,y],
-          pointerLength: 20,
-          pointerWidth: 20,
-          fill: 'black',
-          stroke: 'black',
-          strokeWidth: 4,
-        });
-        this.layer.add(arrow).batchDraw();
-      }
-    });
-
-    this.stage.on('mousemove', () => {
-      if(this.shape == 'arrow') {
-        move = true;
-
-       pos = this.stage?.getRelativePointerPosition();
-      arrow.setAttrs({
-        points: [x, y, pos?.x, pos?.y],
-      })
-  }});
-
-    this.stage.on('mouseup', (e) => {
-      if(this.shape == 'arrow') {
-        isdraw = false;
-        if(move) {
-          
-          arrow.setAttrs({
-            points: [x, y, pos?.x, pos?.y],
-          })
-          this.layer.add(arrow).batchDraw();
-    
-          this.stage.add(this.layer);
-          arrow=null
-      }}
-  });
-  }
+  //  Connect(){
+  //   this.shape = 'line'
+  //   this.stage.on("mousedown",(e) => {
+  //     if(this.shape=='line'){
+  //     e.target.setAttrs(false).draggable(false)
+  //     let x = e.target.getAbsolutePosition().x;
+  //     let y = e.target.getAbsolutePosition().y;
+  //     this.konva = new Konva.Arrow({
+  //       points: [x, y],
+  //       stroke: 'black',
+  //       fill: 'black'
+  //     });
+  //     this.layer.add(this.konva);
+  //     this.layer.batchDraw();}
+  //   });
+  //   this.stage.on("mousemove",(e) => {
+  //     if(this.konva!=null && this.shape=='line' ){
+  //       let endx =  e.target.getAbsolutePosition().x;
+  //       let endy =  e.target.getAbsolutePosition().y;
+  //       const points = [this.konva.points()[0],this.konva.points()[1],endx,endy]
+  //       this.konva.points(points);
+  //       this.layer.batchDraw();
+  //     }
+  //   });
+  //   this.stage.on('mouseup', () => {
+  //     if(this.shape=='line'){
+  //     this.konva = null;}
+  //   });
+  // }
   addProducer() {
     this.shape = 'rect'
     this.stage.on("mousedown",(e) => {
@@ -111,44 +80,55 @@ export class AppComponent implements OnInit{
 
   drawShape(shape: string) {
     if(shape == 'circle') {
-      let circle = new Konva.Circle({
+      this.Machine_num++;
+      let consumer = new Konva.Label({
         x: this.stage?.getRelativePointerPosition()?.x,
         y: this.stage?.getRelativePointerPosition()?.y,
-        radius: 50,
-        fill: 'white',
-        stroke: 'black',
-        strokeWidth: 4,
         draggable:true,
       })
-      this.layer.add(circle);
-      this.stage.add(this.layer);
+      consumer.add(
+        new Konva.Tag({
+          fill: 'blue',
+          cornerRadius: 70
+        })
+      )
+      consumer.add(
+        new Konva.Text({
+          text: 'M'+ this.Machine_num as string,
+          padding: 10,
+          width: 100,
+          height: 50,
+          fill: 'white',
+          fontSize: 20,
+          align: 'center',
+        })
+      )
+      this.layer.add(consumer)
     } else if(shape == 'rect') {
-      let rect = new Konva.Rect({
+      this.Producer_num++
+      let producer = new Konva.Label({
         x: this.stage?.getRelativePointerPosition()?.x,
         y: this.stage?.getRelativePointerPosition()?.y,
-        width: 100,
-        height: 50,
-        fill: 'white',
-        stroke: 'black',
-        strokeWidth: 4,
         draggable:true,
+
       })
-      this.layer.add(rect);
-      this.stage.add(this.layer);
+      producer.add(
+        new Konva.Tag({
+          fill: 'blue',
+        })
+      )
+      producer.add(
+        new Konva.Text({
+          text: 'Q'+ this.Producer_num as string,
+          padding: 10,
+          width: 70,
+          height: 50,
+          fill: 'white',
+          fontSize: 20,
+          align: 'center',
+        })
+      )
+      this.layer.add(producer)
     }
-    // else if(shape == 'arrow') {
-    //   let arrow = new Konva.Arrow({
-    //     x: this.stage?.getRelativePointerPosition()?.x,
-    //     y: this.stage?.getRelativePointerPosition()?.y,
-    //     points: [0, 0, width / 2, height / 2],
-    //     pointerLength: 20,
-    //     pointerWidth: 20,
-    //     fill: 'black',
-    //     stroke: 'black',
-    //     strokeWidth: 4,
-    //   });
-    //   this.layer.add(arrow);
-    //   this.stage.add(this.layer);
-    // }
   }
 }
