@@ -48,13 +48,13 @@ export class AppComponent implements OnInit{
       shape2=this.arr_of_Machines[parseInt(to.value[1])]
       shape1.setAttrs(false).draggable(false)
       shape2.setAttrs(false).draggable(false)
-      this.httpService.addLine(parseInt(to.value[1]),parseInt(from.value[1]), true)
+      this.httpService.addLine(parseInt(to.value[1]),parseInt(from.value[1]), true).subscribe()
     } else{
       shape1=this.arr_of_Machines[parseInt(from.value[1])]
       shape2=this.arr_of_Producers[parseInt(to.value[1])]
       shape1.setAttrs(false).draggable(false)
       shape2.setAttrs(false).draggable(false)
-      this.httpService.addLine(parseInt(from.value[1]),parseInt(to.value[1]), false)
+      this.httpService.addLine(parseInt(from.value[1]),parseInt(to.value[1]), false).subscribe()
     }
       first_pointx =  (shape1.attrs.x * 2+shape1.attrs.width)/2
       first_pointy =  (shape1.attrs.y * 2+shape1.attrs.height)/2
@@ -91,8 +91,9 @@ export class AppComponent implements OnInit{
       });
     } else if(type == "products") {
       let producutCount = document.getElementById("number_of_products") as HTMLInputElement
-      let count = Number(producutCount.value[1])
-      if(count >= 0 && count <= 9) {
+      let count = Number(producutCount.value)
+      console.log(count)
+      if(count >= 0) {
         this.httpService.addProducts(count).subscribe()
       }
     }
@@ -130,7 +131,7 @@ export class AppComponent implements OnInit{
         })
       )
       console.log(parseInt(consumer.attrs.name))
-      this.httpService.addMachine(parseInt(consumer.attrs.name))//send to back
+      this.httpService.addMachine(parseInt(consumer.attrs.name)).subscribe()//send to back
 
       this.layer.add(consumer)
       this.arr_of_Machines.push(consumer)
@@ -165,7 +166,7 @@ export class AppComponent implements OnInit{
       ) 
 
       console.log(parseInt(producer.attrs.name))
-      this.httpService.addProducer(parseInt(producer.attrs.name))//send to back
+      this.httpService.addProducer(parseInt(producer.attrs.name)).subscribe()//send to back
 
       this.layer.add(producer)
       this.arr_of_Producers.push(producer)

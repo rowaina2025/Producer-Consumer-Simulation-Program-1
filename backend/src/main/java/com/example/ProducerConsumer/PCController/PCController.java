@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin()
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/producerConsumer")
 public class PCController {
     @Autowired
@@ -19,6 +19,7 @@ public class PCController {
 
     @GetMapping("/addMachine")
     public int addMachine(@RequestParam int num) {
+        System.out.println("machine worked");
         Machine machine = new Machine(num, new BlockingQueue<>(0), new BlockingQueue<>(0));
         service.addMachine(machine);
         return machine.getTime();
@@ -26,11 +27,13 @@ public class PCController {
 
     @GetMapping("/addProducer")
     public void addProduct(@RequestParam int num) {
+        System.out.println("producer worked");
         service.addQueue(new BlockingQueue(num));
     }
 
     @GetMapping("/addProducts")
-    public void initiatProducts(@RequestBody int productCount) {
+    public void initiatProducts(@RequestParam int productCount) {
+        System.out.println("product added");
         service.addProducts(productCount);
     }
 
@@ -38,6 +41,7 @@ public class PCController {
     public void addLine(@RequestParam int machineFrom,
                         @RequestParam int producerTo,
                         @RequestParam boolean direction) {
+        System.out.println("Line worked");
         service.addLine(machineFrom, producerTo, direction);
     }
 

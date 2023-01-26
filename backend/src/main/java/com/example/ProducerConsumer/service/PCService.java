@@ -6,10 +6,11 @@ import com.example.ProducerConsumer.model.Producer;
 import com.example.ProducerConsumer.model.Product;
 import com.example.ProducerConsumer.snap_shot.CareTaker;
 import com.example.ProducerConsumer.snap_shot.Originator;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class PCService {
     List<BlockingQueue> queues = new ArrayList<>();
     List<Machine> machines = new ArrayList<>();
@@ -28,7 +29,7 @@ public class PCService {
         for(int i = 0; i < productCount; i++) {
             products.add(new Product(0, "555555"));
             PCOriginator.setStateProducer(new Producer(queues.get(0), products));
-            PCCareTaker.add(PCCareTaker.get(pCount++));
+//            PCCareTaker.add(PCCareTaker.get(pCount++));
         }
     }
 
