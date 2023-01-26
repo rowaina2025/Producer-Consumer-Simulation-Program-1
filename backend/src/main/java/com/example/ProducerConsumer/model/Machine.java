@@ -1,5 +1,8 @@
 package com.example.ProducerConsumer.model;
 
+import com.example.ProducerConsumer.snap_shot.CareTaker;
+import com.example.ProducerConsumer.snap_shot.Originator;
+
 import java.util.Random;
 
 public class Machine implements Consumer, Observer {
@@ -11,13 +14,11 @@ public class Machine implements Consumer, Observer {
     private BlockingQueue<Product> toQueue;
     private final static Random rand = new Random();
 
-    public Machine(int num, BlockingQueue<Product> fromQueue, BlockingQueue<Product> toQueue) {
+    public Machine(int num) {
         this.time = rand.nextInt(5000);
         this.num = num;
-        this.fromQueue = fromQueue;
-        this.toQueue = toQueue;
     }
-    
+
     @Override
     public void run() {
         while (true) {
@@ -38,21 +39,28 @@ public class Machine implements Consumer, Observer {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
             }
         }
-
     }
 
     public void consume() throws InterruptedException {
         System.out.println("Machine " + num + " is not waiting ");
         fromQueue.detach(this);// unsubscribe
         this.currentProduct = fromQueue.take();
+        saveState(fromQueue);
     }
 
     public void finish() {
         toQueue.put(this.currentProduct);
         this.currentProduct = null;
+        saveState(toQueue);
+    }
+
+    public void saveState(BlockingQueue<Product> queue) {
+        CareTaker careTaker = CareTaker.getInstance(); //get care taker object
+        Originator originator = new Originator();//get originator class
+        originator.setState(this, queue);//set state
+        careTaker.add(originator.saveStateToMemento());//save the state
     }
 
     public int getTime() {
@@ -85,6 +93,14 @@ public class Machine implements Consumer, Observer {
 
     public BlockingQueue<Product> getToQueue() {
         return toQueue;
+    }
+
+    public void setFromQueue(BlockingQueue<Product> fromQueue) {
+        this.fromQueue = fromQueue;
+    }
+
+    public void setToQueue(BlockingQueue<Product> fromQueue) {
+        this.fromQueue = fromQueue;
     }
 
     public void update() {

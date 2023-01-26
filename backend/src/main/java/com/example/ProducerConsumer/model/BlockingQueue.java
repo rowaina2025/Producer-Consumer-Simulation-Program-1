@@ -8,7 +8,7 @@ import java.util.Queue;
 public class BlockingQueue<Product> implements Observable {
 
     private int num;
-    private Queue<Product> queue = new LinkedList<Product>();
+    private Queue<Product> queue = new LinkedList<>();
     private List<Observer> observers = new ArrayList<>();
 
     public BlockingQueue(int num) {

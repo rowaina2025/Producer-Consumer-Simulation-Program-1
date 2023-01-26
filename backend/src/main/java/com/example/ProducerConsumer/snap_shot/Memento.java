@@ -1,25 +1,23 @@
 package com.example.ProducerConsumer.snap_shot;
 
+import com.example.ProducerConsumer.model.BlockingQueue;
 import com.example.ProducerConsumer.model.Machine;
-import com.example.ProducerConsumer.model.Producer;
+import com.example.ProducerConsumer.model.Product;
 
 public class Memento {
     private Machine machineState;
-    private Producer producerState;
+    private BlockingQueue<Product> queueState;
 
-    public Memento(Machine machineState) {
+    public Memento(Machine machineState, BlockingQueue<Product> queueState) {
         this.machineState = machineState;
-    }
-
-    public Memento(Producer producerState) {
-        this.producerState = producerState;
+        this.queueState = queueState;
     }
 
     public Machine getStateMachine() {
         return machineState;
     }
 
-    public Producer getStateProducer() {
-        return producerState;
+    public BlockingQueue<Product> getStateQueue() {
+        return queueState;
     }
 }

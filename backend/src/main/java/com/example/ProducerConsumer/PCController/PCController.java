@@ -2,13 +2,9 @@ package com.example.ProducerConsumer.PCController;
 
 import com.example.ProducerConsumer.model.BlockingQueue;
 import com.example.ProducerConsumer.model.Machine;
-import com.example.ProducerConsumer.model.Product;
 import com.example.ProducerConsumer.service.PCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @CrossOrigin()
@@ -19,7 +15,7 @@ public class PCController {
 
     @GetMapping("/addMachine")
     public int addMachine(@RequestParam int num) {
-        Machine machine = new Machine(num, new BlockingQueue<>(0), new BlockingQueue<>(0));
+        Machine machine = new Machine(num);
         service.addMachine(machine);
         return machine.getTime();
     }
@@ -40,7 +36,6 @@ public class PCController {
                         @RequestParam boolean direction) {
         service.addLine(machineFrom, producerTo, direction);
     }
-
 
 
 }

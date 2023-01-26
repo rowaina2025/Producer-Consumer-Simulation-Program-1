@@ -1,23 +1,27 @@
 package com.example.ProducerConsumer;
 
+import com.example.ProducerConsumer.model.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class ProducerConsumerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ProducerConsumerApplication.class, args);
-        /*int countQ = 0;
+        int countQ = 0;
         int countM = 0;
         BlockingQueue<Product> queue1 = new BlockingQueue<>(countQ++);
         BlockingQueue<Product> queue2 = new BlockingQueue<>(countQ++);
         BlockingQueue<Product> queue3 = new BlockingQueue<>(countQ++);
         BlockingQueue<Product> queue4 = new BlockingQueue<>(countQ++);
-        Consumer m1 = new Machine(1000, countM++, queue1, queue2);
-        Consumer m2 = new Machine(500, countM++, queue1, queue2);
-        Consumer m3 = new Machine(700, countM++, queue2, queue3);
-        Consumer m4 = new Machine(100, countM++, queue3, queue4);
+        Consumer m1 = new Machine(countM++);
+        Consumer m2 = new Machine(countM++);
+        Consumer m3 = new Machine(countM++);
+        Consumer m4 = new Machine(countM++);
 
         List<Product> products = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
@@ -45,7 +49,7 @@ public class ProducerConsumerApplication {
 
         c4.start();
         System.out.println("c4 started");
-*/
+
 
     }
 
