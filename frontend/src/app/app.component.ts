@@ -40,41 +40,6 @@ export class AppComponent implements OnInit{
     });
   }
 
-<<<<<<< Updated upstream
-  addLine(){
-    let shape1:any
-    let shape2:any
-    let first_pointx:any
-    let first_pointy:any
-    let second_pointx :any
-    let second_pointy:any
-    let from= document.getElementById("from") as HTMLInputElement
-    let to= document.getElementById("to") as HTMLInputElement
-    if(from.value[0] =='Q'&& to.value[0]=='M'){
-      shape1=this.arr_of_Producers[parseInt(from.value[1])]
-      shape2=this.arr_of_Machines[parseInt(to.value[1])]
-      shape1.setAttrs(false).draggable(false)
-      shape2.setAttrs(false).draggable(false)
-    } else{
-      shape1=this.arr_of_Machines[parseInt(from.value[1])]
-      shape2=this.arr_of_Producers[parseInt(to.value[1])]
-      
-      shape1.setAttrs(false).draggable(false)
-      shape2.setAttrs(false).draggable(false)
-    }
-      first_pointx =  (shape1.attrs.x * 2+shape1.attrs.width)/2 
-      first_pointy =  (shape1.attrs.y * 2+shape1.attrs.height)/2
-      second_pointx = (shape2.attrs.x * 2+shape2.attrs.width)/2
-      second_pointy = (shape2.attrs.y * 2+shape2.attrs.height)/2
-    let arrow = new Konva.Arrow({
-            points: [first_pointx,first_pointy,second_pointx,second_pointy],
-            stroke: '#505050',
-            fill: '#505050'
-          });
-          this.layer.add(arrow)
-          from.value=''
-          to.value=''
-=======
   addLine(from: string, to: string){
     // let arrow = new Konva.Arrow({
     //         points: [x, y],
@@ -84,7 +49,6 @@ export class AppComponent implements OnInit{
 
     //       this.layer.add(this.konva);
     //       this.layer.batchDraw()
->>>>>>> Stashed changes
   }
 
   addProducer() {
