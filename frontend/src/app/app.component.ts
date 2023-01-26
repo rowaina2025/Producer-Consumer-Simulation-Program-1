@@ -52,27 +52,23 @@ export class AppComponent implements OnInit{
     if(from.value[0] =='Q'&& to.value[0]=='M'){
       shape1=this.arr_of_Producers[parseInt(from.value[1])]
       shape2=this.arr_of_Machines[parseInt(to.value[1])]
-      first_pointx =  (shape1.attrs.x * 2+shape1.attrs.width)/2 + shape1.attrs.width/2
-      first_pointy =  (shape1.attrs.y * 2+shape1.attrs.height)/2
-      second_pointx = (shape2.attrs.x * 2+shape2.attrs.width)/2 - shape2.attrs.width/2
-      second_pointy = (shape2.attrs.y * 2+shape2.attrs.height)/2
       shape1.setAttrs(false).draggable(false)
       shape2.setAttrs(false).draggable(false)
     } else{
       shape1=this.arr_of_Machines[parseInt(from.value[1])]
       shape2=this.arr_of_Producers[parseInt(to.value[1])]
-      first_pointx =  (shape1.attrs.x * 2+shape1.attrs.width)/2 + shape1.attrs.width/2
-      first_pointy =  (shape1.attrs.y * 2+shape1.attrs.height)/2
-      second_pointx = (shape2.attrs.x * 2+shape2.attrs.width)/2 - shape2.attrs.width/2
-      second_pointy = (shape2.attrs.y * 2+shape2.attrs.height)/2
+      
       shape1.setAttrs(false).draggable(false)
       shape2.setAttrs(false).draggable(false)
     }
-    console.log(shape1.attrs.width)
+      first_pointx =  (shape1.attrs.x * 2+shape1.attrs.width)/2 
+      first_pointy =  (shape1.attrs.y * 2+shape1.attrs.height)/2
+      second_pointx = (shape2.attrs.x * 2+shape2.attrs.width)/2
+      second_pointy = (shape2.attrs.y * 2+shape2.attrs.height)/2
     let arrow = new Konva.Arrow({
             points: [first_pointx,first_pointy,second_pointx,second_pointy],
-            stroke: 'black',
-            fill: 'black'
+            stroke: '#505050',
+            fill: '#505050'
           });
           this.layer.add(arrow)
           from.value=''
