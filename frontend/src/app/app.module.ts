@@ -1,9 +1,9 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { httpsevice } from 'src/services/httpservice';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { httpsevice } from './httpservice';
 
 
 @NgModule({
@@ -15,9 +15,10 @@ import { httpsevice } from './httpservice';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers:
-   [httpsevice,
-    HttpClient,],
+  providers:[
+    httpsevice,
+    HttpClient,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

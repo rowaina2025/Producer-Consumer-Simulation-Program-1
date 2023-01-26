@@ -1,18 +1,19 @@
 <div class="toolBar">
-    <button (click)="addProducer()"> ADD Q</button>
-    <button (click)="addMachine()"> ADD M</button>
-    <input class="textBox" type="text" placeholder="from" id="from" >
+    <button (click)="addItem('producer')"> ADD Q</button>
+    <button (click)="addItem('machine')"> ADD M</button>
+    <input class="textBox" type="text" placeholder="from" id="from">
     <input class="textBox" type="text" placeholder="to" id="to">
     <button (click)="addLine()"> Add Line </button>
-    <input type="text" placeholder="number" #number_of_products>
-    <button> submit </button>
+    <input class="textBox" type="text" placeholder="number" #number_of_products id="number_of_products">
+    <button (click)="addItem('products')"> submit </button>
     <button> ADD Product </button>
     <button> Reset</button>
     <button> Run</button>
 </div>
 <div class="listinput">
- <div class="b" > <!-- *ngFor="let item of items; let i = index;" (click)="showDetails(i)" -->
-    <button>  </button> <!-- item.getitem() -->
-  </div>
+    <div class="b">
+        <!-- *ngFor="let item of items; let i = index;" (click)="showDetails(i)" -->
+        <button> {{selectedMachine}} </button>
+        <!-- item.getitem() -->
+    </div>
 </div>
-<div id="container" style="position: relative; border-radius: 25px; height: 575px; width: 100%;"></div>

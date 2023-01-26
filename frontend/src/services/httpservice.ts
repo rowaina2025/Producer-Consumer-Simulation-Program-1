@@ -1,4 +1,4 @@
-import { AppComponent } from "./app.component";
+import { AppComponent } from "../app/app.component";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
@@ -9,7 +9,7 @@ export class httpsevice{
     constructor(private http: HttpClient) {
         this.Url = 'http://localhost:8080/ProducerConsumer';
       }
-  
+
     public addMachine(num: number){
         console.log("Sending request...");
         return this.http.get<void>(this.Url + "addMachine",{params:{num}});

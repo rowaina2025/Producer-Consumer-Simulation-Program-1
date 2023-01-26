@@ -30,14 +30,8 @@ public class PCController {
     }
 
     @GetMapping("/addProducts")
-    public List<String> initiatProducts(@RequestBody int productCount) {
+    public void initiatProducts(@RequestBody int productCount) {
         service.addProducts(productCount);
-        List<String> colors = new ArrayList<>();
-        List<Product> products = service.getProducts();
-        for(int i = 0; i < productCount; i++) {
-            colors.add(products.get(i).getColor());
-        }
-        return colors;
     }
 
     @GetMapping("/addLine")
@@ -47,6 +41,6 @@ public class PCController {
         service.addLine(machineFrom, producerTo, direction);
     }
 
-    
+
 
 }

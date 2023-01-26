@@ -3,23 +3,26 @@
     width: 100%;
     background-color: rgb(255, 255, 255);
     border-radius: 25px;
-    border: 5px solid rgb(144, 121, 181) ;
+    border: 5px solid rgb(144, 121, 181);
 }
-.listinput{
-    height:400px;
+
+.listinput {
+    height: 400px;
     width: 200px;
     position: absolute;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
-    border: 2px solid rgb(144, 121, 181) ;
+    border: 2px solid rgb(144, 121, 181);
     bottom: 0px;
-    right:0px;
+    right: 0px;
 }
-.listinput .b button{
-    color:#0a406b; 
-    position: relative; 
+
+.listinput .b button {
+    color: #0a406b;
+    position: relative;
     width: 190px;
 }
+
 button {
     position: relative;
     height: 40px;
@@ -37,8 +40,26 @@ button {
     top: 30px;
 }
 
+.listinput {
+    height: 400px;
+    width: 200px;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    border: 2px solid rgb(144, 121, 181);
+    bottom: 0px;
+    right: 0px;
+}
+
+.listinput .b button {
+    color: #0a406b;
+    position: relative;
+    width: 190px;
+}
+
 .textBox {
     margin-left: 2%;
+    cursor: text;
 }
 
 button:hover {

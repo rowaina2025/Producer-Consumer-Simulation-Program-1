@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Konva from 'konva';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
-import { reduce } from 'rxjs';
-import { httpsevice } from './httpservice';
-
+import { httpsevice } from 'src/services/httpservice';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +17,10 @@ export class AppComponent implements OnInit{
   konva: any;
   Machine_num=-1
   Producer_num=-1
-  arr_of_Machines:Array<Konva.Label> =[]
-  arr_of_Producers:Array<Konva.Label> =[]
+  arr_of_Machines:Array<Konva.Label> = []
+  arr_of_Producers:Array<Konva.Label> = []
+  arr_of_Products: Array<String> = []
+  selectedMachine: string = ''
   constructor (private httpService: httpsevice){
 
   }
@@ -28,22 +28,10 @@ export class AppComponent implements OnInit{
     this.stage = new Stage({
       container: "container",
       width: window.innerWidth,
-      height:  window.innerHeight,
+      height:  window.innerHeight
     });
     this.layer = new Layer();
     this.stage.add(this.layer);
-  }
-
-  addMachine() {
-    this.shape = 'circle'
-    this.stage.on("mousedown",(e) => {
-      if(e.target instanceof Konva.Circle) {/*select shape*/}
-      else if(this.shape == 'circle'){
-        this.drawShape('circle')
-        this.shape = ''
-        //TODO do your implementation on adding new machine
-      }
-    });
   }
 
   addLine(){
@@ -68,7 +56,7 @@ export class AppComponent implements OnInit{
       shape2.setAttrs(false).draggable(false)
       this.httpService.addLine(parseInt(from.value[1]),parseInt(to.value[1]), false)
     }
-      first_pointx =  (shape1.attrs.x * 2+shape1.attrs.width)/2 
+      first_pointx =  (shape1.attrs.x * 2+shape1.attrs.width)/2
       first_pointy =  (shape1.attrs.y * 2+shape1.attrs.height)/2
       second_pointx = (shape2.attrs.x * 2+shape2.attrs.width)/2
       second_pointy = (shape2.attrs.y * 2+shape2.attrs.height)/2
@@ -77,19 +65,37 @@ export class AppComponent implements OnInit{
             stroke: '#505050',
             fill: '#505050'
           });
-         
+
           this.layer.add(arrow)
           from.value=''
           to.value=''
   }
-  addProducer() {
-    this.shape = 'rect'
-    this.stage.on("mousedown",(e) => {
-      if(this.shape == 'rect'){
-        this.drawShape('rect')
-        this.shape = ''
+
+  addItem(type: string) {
+    if(type == "producer") {
+      this.shape = 'rect'
+      this.stage.on("mousedown",(e) => {
+        if(this.shape == 'rect'){
+          this.drawShape('rect')
+          this.shape = ''
+        }
+      });
+    } else if(type == "machine") {
+      this.shape = 'circle'
+      this.stage.on("mousedown",(e) => {
+        if(e.target instanceof Konva.Circle) {/*select shape*/}
+        else if(this.shape == 'circle'){
+          this.drawShape('circle')
+          this.shape = ''
+        }
+      });
+    } else if(type == "products") {
+      let producutCount = document.getElementById("number_of_products") as HTMLInputElement
+      let count = Number(producutCount.value[1])
+      if(count >= 0 && count <= 9) {
+        this.httpService.addProducts(count).subscribe()
       }
-    });
+    }
   }
 
   drawShape(shape: string) {
@@ -105,8 +111,7 @@ export class AppComponent implements OnInit{
       })
       consumer.add(
         new Konva.Tag({
-          fill: 'lightblue',
-          stroke:"blue ",
+          fill: 'blue',
           cornerRadius: 50
         })
       )
@@ -114,12 +119,11 @@ export class AppComponent implements OnInit{
         new Konva.Text({
           text: 'M'+ this.Machine_num as string,
           padding: 10,
-          width: 70,
-          height:70,
+          width: 50,
+          height:50,
           fill: 'white',
           fontSize: 20,
           align: 'center',
-          verticalAlign: 'middle' ,
           name: 'M'+ this.Machine_num as string,
         })
       )
@@ -140,20 +144,18 @@ export class AppComponent implements OnInit{
       })
       producer.add(
         new Konva.Tag({
-          fill:'lightgreen' ,
-          stroke: "orange",
+          fill: 'blue',
         })
       )
       producer.add(
         new Konva.Text({
           text: 'Q'+ this.Producer_num as string,
           padding: 10,
-          width: 80,
+          width: 50,
           height: 50,
           fill: 'white',
           fontSize: 20,
           align: 'center',
-          verticalAlign: 'middle' ,
           name: 'Q'+ this.Producer_num as string,
         })
       )
