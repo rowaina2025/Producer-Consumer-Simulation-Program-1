@@ -1,25 +1,43 @@
 package com.example.ProducerConsumer.snap_shot;
 
 import com.example.ProducerConsumer.model.Machine;
+import com.example.ProducerConsumer.model.Producer;
 
 public class Originator {
 
-     private Machine state;
+     private Machine machineState;
+     private Producer producerState;
 
-     public void setState(Machine state) {
-         this.state = state;
+     public void setStateMachine(Machine machineState) {
+         this.machineState = machineState;
      }
 
-     public Machine getState() {
-         return state;
+    public void setStateProducer(Producer producerState) {
+        this.producerState = producerState;
+    }
+
+     public Machine getStateMachine() {
+         return machineState;
      }
 
-     public Memento saveStateToMemento() {
-         return new Memento(state);
+     public Producer getProducerState() {
+         return producerState;
      }
 
-     public void getStateFromMemento(Memento memento) {
-         state = memento.getState();
+     public Memento saveStateToMementoMachine() {
+         return new Memento(machineState);
      }
+
+    public Memento saveStateToMementoProducer() {
+        return new Memento(producerState);
+    }
+
+     public void getStateFromMementoMachine(Memento memento) {
+         machineState = memento.getStateMachine();
+     }
+
+    public void getStateFromMementoProducer(Memento memento) {
+        producerState = memento.getStateProducer();
+    }
 
 }
