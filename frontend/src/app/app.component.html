@@ -1,9 +1,9 @@
 <div class="toolBar">
     <button (click)="addProducer()"> ADD Q</button>
     <button (click)="addMachine()"> ADD M</button>
-    <input class="textBox" type="text" placeholder="from" #from>
-    <input class="textBox" type="text" placeholder="to" #to>
-    <button (click)="addLine(from.value, to.value)"> Add Line </button>
+    <input class="textBox" type="text" placeholder="from" id="from" >
+    <input class="textBox" type="text" placeholder="to" id="to">
+    <button (click)="addLine()"> Add Line </button>
     <input type="text" placeholder="number" #number_of_products>
     <button> submit </button>
     <button> ADD Product </button>
