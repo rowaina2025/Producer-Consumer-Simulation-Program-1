@@ -39,35 +39,7 @@ export class AppComponent implements OnInit{
       }
     });
   }
-  //  Connect(){
-  //   this.shape = 'line'
-  //   this.stage.on("mousedown",(e) => {
-  //     if(this.shape=='line'){
-  //     e.target.setAttrs(false).draggable(false)
-  //     let x = e.target.getAbsolutePosition().x;
-  //     let y = e.target.getAbsolutePosition().y;
-  //     this.konva = new Konva.Arrow({
-  //       points: [x, y],
-  //       stroke: 'black',
-  //       fill: 'black'
-  //     });
-  //     this.layer.add(this.konva);
-  //     this.layer.batchDraw();}
-  //   });
-  //   this.stage.on("mousemove",(e) => {
-  //     if(this.konva!=null && this.shape=='line' ){
-  //       let endx =  e.target.getAbsolutePosition().x;
-  //       let endy =  e.target.getAbsolutePosition().y;
-  //       const points = [this.konva.points()[0],this.konva.points()[1],endx,endy]
-  //       this.konva.points(points);
-  //       this.layer.batchDraw();
-  //     }
-  //   });
-  //   this.stage.on('mouseup', () => {
-  //     if(this.shape=='line'){
-  //     this.konva = null;}
-  //   });
-  // }
+
   addLine(){
     let shape1:any
     let shape2:any
@@ -77,8 +49,6 @@ export class AppComponent implements OnInit{
     let second_pointy:any
     let producer= document.getElementById("from") as HTMLInputElement
     let machine= document.getElementById("to") as HTMLInputElement
-    console.log(this.arr_of_Producers[parseInt(producer.value[1])].attrs.x)
-    console.log(machine.value[1])
     if(producer.value[0] =='Q'&& machine.value[0]=='M'){
       shape1=this.arr_of_Producers[parseInt(producer.value[1])]
       shape2=this.arr_of_Machines[parseInt(machine.value[1])]
@@ -86,6 +56,8 @@ export class AppComponent implements OnInit{
       first_pointy =  (shape1.attrs.y * 2+shape1.attrs.height)/2
       second_pointx = (shape2.attrs.x * 2+shape2.attrs.width)/2 - shape2.attrs.width/2
       second_pointy = (shape2.attrs.y * 2+shape2.attrs.height)/2
+      shape1.setAttrs(false).draggable(false)
+      shape2.setAttrs(false).draggable(false)
     } else{
       shape1=this.arr_of_Machines[parseInt(machine.value[1])]
       shape2=this.arr_of_Producers[parseInt(producer.value[1])]
@@ -93,6 +65,8 @@ export class AppComponent implements OnInit{
       first_pointy =  (shape1.attrs.y * 2+shape1.attrs.height)/2
       second_pointx = (shape2.attrs.x * 2+shape2.attrs.width)/2 + shape2.attrs.width/2
       second_pointy = (shape2.attrs.y * 2+shape2.attrs.height)/2
+      shape1.setAttrs(false).draggable(false)
+      shape2.setAttrs(false).draggable(false)
     }
     console.log(shape1.attrs.width)
     let arrow = new Konva.Arrow({
@@ -100,7 +74,7 @@ export class AppComponent implements OnInit{
             stroke: 'black',
             fill: 'black'
           });
-
+          this.layer.add(arrow)
     
   }
   addProducer() {
