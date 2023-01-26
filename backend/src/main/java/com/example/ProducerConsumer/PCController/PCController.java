@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin()
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/producerConsumer")
 public class PCController {
     @Autowired
@@ -16,17 +16,20 @@ public class PCController {
     @GetMapping("/addMachine")
     public int addMachine(@RequestParam int num) {
         Machine machine = new Machine(num);
+        System.out.println("machine worked");
         service.addMachine(machine);
         return machine.getTime();
     }
 
     @GetMapping("/addProducer")
     public void addProduct(@RequestParam int num) {
+        System.out.println("producer worked");
         service.addQueue(new BlockingQueue(num));
     }
 
     @GetMapping("/addProducts")
-    public void initiatProducts(@RequestBody int productCount) {
+    public void initiatProducts(@RequestParam int productCount) {
+        System.out.println("product added");
         service.addProducts(productCount);
     }
 
@@ -34,6 +37,7 @@ public class PCController {
     public void addLine(@RequestParam int machineFrom,
                         @RequestParam int producerTo,
                         @RequestParam boolean direction) {
+        System.out.println("Line worked");
         service.addLine(machineFrom, producerTo, direction);
     }
 

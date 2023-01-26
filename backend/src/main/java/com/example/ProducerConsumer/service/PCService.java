@@ -5,10 +5,12 @@ import com.example.ProducerConsumer.model.Machine;
 import com.example.ProducerConsumer.model.Producer;
 import com.example.ProducerConsumer.model.Product;
 import com.example.ProducerConsumer.snap_shot.Originator;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class PCService {
     List<BlockingQueue> queues = new ArrayList<>();
     List<Machine> machines = new ArrayList<>();
