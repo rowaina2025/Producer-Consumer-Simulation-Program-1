@@ -6,14 +6,20 @@
     <button (click)="addLine()"> Add Line </button>
     <input class="textBox" type="text" placeholder="number" #number_of_products id="number_of_products">
     <button (click)="addItem('products')"> ADD Product </button>
-    <button> Reset</button>
+    <button (click)="reset()"> Reset</button>
     <button> Run</button>
+    <button> Replay</button>
 </div>
 <div id="container"></div>
-<div class="listinput">
-    <div class="b">
-        <!-- *ngFor="let item of items; let i = index;" (click)="showDetails(i)" -->
+<div class="listinput" id="listinput">
+    <div class="b">output
+        <!-- ngFor="let item of items; let i = index;" (click)="showDetails(i)" -->
         <button> {{selectedMachine}} </button>
+        <!-- item.getitem() -->
+    </div>
+    <div class="c" *ngFor="let item of arr_of_Products; let i = index;">
+        <!--ngFor="let item of items; let i = index;" (click)="showDetails(i)" -->
+        <button> {{i}} </button>
         <!-- item.getitem() -->
     </div>
 </div>

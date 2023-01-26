@@ -19,7 +19,7 @@ export class AppComponent implements OnInit{
   Producer_num=-1
   arr_of_Machines:Array<Konva.Label> = []
   arr_of_Producers:Array<Konva.Label> = []
-  arr_of_Products: Array<String> = []
+  arr_of_Products: Array<number> = []
   selectedMachine: string = ''
   constructor (private httpService: httpsevice){
 
@@ -32,8 +32,25 @@ export class AppComponent implements OnInit{
     });
     this.layer = new Layer();
     this.stage.add(this.layer);
-  }
 
+    this.stage.on("mousedown",(e) => {
+      console.log(e.target.attrs.name)
+    });
+  }
+  reset(){
+  this.stage.destroy();
+  this.stage = new Stage({
+    container: "container",
+    width: window.innerWidth,
+    height:  window.innerHeight
+  });
+  this.layer = new Layer();
+  this.stage.add(this.layer);
+
+  this.stage.on("mousedown",(e) => {
+    console.log(e.target.attrs.name)
+  });
+  }
   addLine(){
     let shape1:any
     let shape2:any
@@ -96,6 +113,11 @@ export class AppComponent implements OnInit{
       if(count >= 0) {
         this.httpService.addProducts(count).subscribe()
       }
+      for(let i = 1; i<=count; i++){
+        this.arr_of_Products.push(i);
+        console.log(this.arr_of_Products[i-1])
+      }
+ 
     }
   }
 
