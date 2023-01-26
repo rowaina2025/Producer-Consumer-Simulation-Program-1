@@ -16,6 +16,8 @@ export class AppComponent implements OnInit{
   konva: any;
   Machine_num=-1
   Producer_num=-1
+  arr_of_Machines:Array<Konva.Label> =[]
+  arr_of_Producers:Array<Konva.Label> =[]
   ngOnInit(): void {
     this.stage = new Stage({
       container: "container",
@@ -66,6 +68,22 @@ export class AppComponent implements OnInit{
   //     this.konva = null;}
   //   });
   // }
+  addLine(){
+    let producer= document.getElementById("from") as HTMLInputElement
+    let machine= document.getElementById("to") as HTMLInputElement
+
+    // let arrow = new Konva.Arrow({
+    //         points: [x, y],
+    //         stroke: 'black',
+    //         fill: 'black'
+    //       });
+
+    //       this.layer.add(this.konva);
+    //       this.layer.batchDraw()
+      
+    
+    
+  }
   addProducer() {
     this.shape = 'rect'
     this.stage.on("mousedown",(e) => {
@@ -101,9 +119,11 @@ export class AppComponent implements OnInit{
           fill: 'white',
           fontSize: 20,
           align: 'center',
+          name: 'M'+ this.Machine_num as string,
         })
       )
       this.layer.add(consumer)
+      this.arr_of_Machines.push(consumer)
     } else if(shape == 'rect') {
       this.Producer_num++
       let producer = new Konva.Label({
@@ -126,9 +146,11 @@ export class AppComponent implements OnInit{
           fill: 'white',
           fontSize: 20,
           align: 'center',
+          name: 'Q'+ this.Producer_num as string,
         })
       )
       this.layer.add(producer)
+      this.arr_of_Producers.push(producer)
     }
   }
 }

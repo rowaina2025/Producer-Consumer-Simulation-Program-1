@@ -1,10 +1,10 @@
 <div class="toolBar">
     <button id="producer" (click)="addProducer()"> ADD Q</button>
     <button id="machine" (click)="addMachine()"> ADD M</button>
-    <input type="text">
-    <input type="text">
-    <button  > Add Line </button>
-    <input type="text">
+    <input type="text" placeholder="from" id="from">
+    <input type="text" placeholder="to" id="to">
+    <button (click)="addLine()" > Add Line </button>
+    <input type="text" placeholder="number" id="number_of_products">
     <button> ADD Product</button>
     <button> Reset</button>
     <button> Run</button>
