@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Konva from 'konva';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
+import { reduce } from 'rxjs';
 import { httpsevice } from './httpservice';
 
 
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit{
     this.stage = new Stage({
       container: "container",
       width: window.innerWidth,
-      height:  window.innerHeight
+      height:  window.innerHeight,
     });
     this.layer = new Layer();
     this.stage.add(this.layer);
@@ -104,7 +105,8 @@ export class AppComponent implements OnInit{
       })
       consumer.add(
         new Konva.Tag({
-          fill: 'blue',
+          fill: 'lightblue',
+          stroke:"blue ",
           cornerRadius: 50
         })
       )
@@ -112,11 +114,12 @@ export class AppComponent implements OnInit{
         new Konva.Text({
           text: 'M'+ this.Machine_num as string,
           padding: 10,
-          width: 50,
-          height:50,
+          width: 70,
+          height:70,
           fill: 'white',
           fontSize: 20,
           align: 'center',
+          verticalAlign: 'middle' ,
           name: 'M'+ this.Machine_num as string,
         })
       )
@@ -137,18 +140,20 @@ export class AppComponent implements OnInit{
       })
       producer.add(
         new Konva.Tag({
-          fill: 'blue',
+          fill:'lightgreen' ,
+          stroke: "orange",
         })
       )
       producer.add(
         new Konva.Text({
           text: 'Q'+ this.Producer_num as string,
           padding: 10,
-          width: 50,
+          width: 80,
           height: 50,
           fill: 'white',
           fontSize: 20,
           align: 'center',
+          verticalAlign: 'middle' ,
           name: 'Q'+ this.Producer_num as string,
         })
       )
