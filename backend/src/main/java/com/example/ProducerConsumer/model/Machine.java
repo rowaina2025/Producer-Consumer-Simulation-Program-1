@@ -5,7 +5,7 @@ import com.example.ProducerConsumer.snap_shot.Originator;
 
 import java.util.Random;
 
-public class Machine implements Consumer, Observer {
+public class Machine implements Runnable, Observer {
     private int time;
     private int num;
     private Product currentProduct;
