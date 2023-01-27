@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Konva from 'konva';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
-import { Httpsevice } from 'src/services/httpservice';
+import { Httpsevice } from 'src/app/services/httpservice';
 
 @Component({
   selector: 'app-root',
@@ -56,9 +56,7 @@ export class AppComponent implements OnInit{
     this.Producer_num=-1
     this.httpService.clear()
   }
-  start(){
-    this.httpService.start().subscribe();
-  }
+
   addLine(){
     let shape1:any
     let shape2:any
@@ -205,5 +203,11 @@ export class AppComponent implements OnInit{
 
   showProducts(q: number) {
 
+  }
+
+  start(){
+    this.httpService.getUnit().subscribe((res)=>{
+
+    });
   }
 }

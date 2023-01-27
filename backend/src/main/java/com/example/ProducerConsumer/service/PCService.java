@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 @Service
@@ -95,8 +96,9 @@ public class PCService {
         }
     }
 
-    public List<Product> getProducts(int queueNo) {
-        return products;
+    public Queue<Product> getProducts(int queueNo) {
+        List<Product> products = new ArrayList<>();
+        return queues.get(queueNo).getQueue();
     }
 
     public void start() {
@@ -111,10 +113,16 @@ public class PCService {
     }
 
     public Unit getUnit() {
-        while (queues.get(1).getQueue().size() < products.size()) {
-            unit.setMachines(machines);
-            unit.setQueues(queues);
+        List<String> machines = new ArrayList<>();
+        List<Queue<Product>> queues = new ArrayList<>();
+        for(int i = 0; i < this.machines.size(); i++) {
+            machines.add(this.machines.get(i).getCurrentProduct().getColor());
         }
+        for(int i = 0; i < this.queues.size(); i++) {
+            queues.add(this.queues.get(i).getQueue());
+        }
+        unit.setMachines(machines);
+        unit.setQueues(queues);
         return unit;
     }
 }

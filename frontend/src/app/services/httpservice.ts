@@ -1,4 +1,4 @@
-import { AppComponent } from "../app/app.component";
+import { AppComponent } from "../app.component";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
@@ -11,7 +11,7 @@ const httpOptions = {
 export class Httpsevice{
     private Url: string;
     constructor(private http: HttpClient) {
-        this.Url = 'http://localhost:8085/producerConsumer/';
+        this.Url = 'http://localhost:8080/producerConsumer/';
       }
 
     public addMachine(num: number){
@@ -30,8 +30,8 @@ export class Httpsevice{
         console.log("Sending request...");
         return this.http.get<void>(this.Url + "addLine",{params:{machineFrom,producerTo,direction}});
     }
- 
-    public start(){
+
+    public getUnit(){
       console.log("Sending request...");
       return this.http.get<void>(this.Url + "start");
     }
