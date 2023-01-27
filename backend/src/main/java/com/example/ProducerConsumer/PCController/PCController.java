@@ -40,7 +40,10 @@ public class PCController {
         System.out.println("Line worked");
         service.addLine(machineFrom, producerTo, direction);
     }
-
-    
+    @GetMapping("/start")
+    public void start(){
+        System.out.println("simulation started");
+        service.start();
+    }
 
 }
