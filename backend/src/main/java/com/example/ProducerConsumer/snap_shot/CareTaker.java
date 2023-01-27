@@ -28,7 +28,7 @@ public class CareTaker {
         if (prevTime == 0) {
             time.add(0L);
         } else {
-            time.add(currTime - prevTime);
+            time.add(currTime - prevTime + 500);
         }
         prevTime = currTime;
         mementoList.add(state);
