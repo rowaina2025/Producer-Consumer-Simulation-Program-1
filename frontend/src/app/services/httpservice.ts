@@ -14,7 +14,7 @@ const httpOptions = {
 export class Httpsevice{
     private Url: string;
     constructor(private http: HttpClient) {
-        this.Url = 'http://localhost:8080/producerConsumer/';
+        this.Url = 'http://localhost:8085/producerConsumer/';
       }
 
     public addMachine(num: number){

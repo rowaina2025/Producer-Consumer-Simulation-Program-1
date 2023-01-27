@@ -133,7 +133,11 @@ export class AppComponent implements OnInit{
         }
       });
     } else if(type == "products") {
-
+      let producutCounts = document.getElementById("number_of_products") as HTMLInputElement
+      let counts = Number(producutCounts.value)
+      if(counts >= 0) {
+        this.httpService.addProducts(counts).subscribe()
+      }
     }
   }
 
@@ -216,12 +220,6 @@ export class AppComponent implements OnInit{
   }
 
   async getUnit() {
-    let producutCounts = document.getElementById("number_of_products") as HTMLInputElement
-    let counts = Number(producutCounts.value)
-    if(counts >= 0) {
-      this.httpService.addProducts(counts).subscribe()
-    }
-    await this.delay(1000)
     let producutCount = document.getElementById("number_of_products") as HTMLInputElement
     let count = Number(producutCount.value)
    // this.httpService.start().subscribe()
@@ -236,9 +234,12 @@ export class AppComponent implements OnInit{
 
       if( res['queues'][res['queues'].length-1]['queue'].length==count ){
         console.log("finished sssssssssssssssssssssss")
-        for(let i = 0; i < this.arr_of_Machines.length && machine[i]['currentProduct']!=null ; i++) {
+        
+        this.replay();
+        for(let i = 0; i < this.arr_of_Machines.length ; i++) {
           this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: "white", })
         }
+
         break
       }
       await this.delay(500);
@@ -246,6 +247,7 @@ export class AppComponent implements OnInit{
   }
 
   replay() {
+
     this.mementoList = []
     this.timeList = []
     this.httpService.getMamentoList().subscribe(async (res) => {
@@ -270,6 +272,9 @@ export class AppComponent implements OnInit{
         this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: "white", })
       }
     })
+    for(let i = 0; i < this.arr_of_Machines.length ; i++) {
+      this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: "white", })
+    }
   }
 
   getTime() {
