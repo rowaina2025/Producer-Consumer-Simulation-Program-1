@@ -31,7 +31,7 @@ public class Producer implements Runnable {
         careTaker.add(originator.saveStateToMemento());//save the state
         for (Product product : products) {
             try {
-                Thread.sleep(rand.nextInt(5000));
+                Thread.sleep(Math.max(1000, rand.nextInt(5000)));
                 this.queue.put(product);
                 originator.setState(null, this.queue);//set state
                 careTaker.add(originator.saveStateToMemento());//save the state
