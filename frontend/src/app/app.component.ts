@@ -222,8 +222,13 @@ export class AppComponent implements OnInit{
     //TODO remove products window
   }
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   getUnit() {
-    this.httpService.getUnit().subscribe((res) => {
+    this.httpService.getUnit().subscribe(async (res) => {
+      await this.delay(100);
       let machine = res['machines']
       console.log(machine)
       for(let i = 0; i < this.arr_of_Machines.length; i++) {
