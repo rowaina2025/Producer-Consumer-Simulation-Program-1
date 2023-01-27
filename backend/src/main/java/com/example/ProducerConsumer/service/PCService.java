@@ -113,15 +113,6 @@ public class PCService {
     }
 
     public Unit getUnit() {
-        /*List<String> machines = new ArrayList<>();
-        List<Queue<Product>> queues = new ArrayList<>();
-        for(int i = 0; i < this.machines.size(); i++) {
-            System.out.println(this.machines.get(i).getCurrentProduct());
-            machines.add(this.machines.get(i).getCurrentProduct().getColor());
-        }
-        for(int i = 0; i < this.queues.size(); i++) {
-            queues.add(this.queues.get(i).getQueue());
-        }*/
         unit.setMachines(machines);
         unit.setQueues(queues);
         return unit;

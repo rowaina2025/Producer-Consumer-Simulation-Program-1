@@ -16,6 +16,7 @@ public class Machine implements Runnable, Observer {
 
     public Machine(int num) {
         this.time = rand.nextInt(5000);
+        this.time = Math.max(1000, this.time);
         this.num = num;
     }
 
@@ -39,6 +40,11 @@ public class Machine implements Runnable, Observer {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
