@@ -8,13 +8,14 @@
 
 .listinput {
     height: 400px;
-    width: 200px;
+    width: 300px;
     position: absolute;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     border: 2px solid rgb(144, 121, 181);
     bottom: 0px;
     right: 0px;
+    overflow: scroll;
 }
 
 .listinput .b button {
@@ -85,4 +86,10 @@ input {
     float: left;
     left: 15px;
     top: 30px;
+}
+
+.output {
+    position: relative;
+    font-size: 50px;
+    font-family: sans-serif;
 }

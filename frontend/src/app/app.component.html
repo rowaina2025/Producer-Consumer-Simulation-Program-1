@@ -1,24 +1,23 @@
 <div class="toolBar">
-    <button (click)="addItem('producer')"> ADD Q</button>
-    <button (click)="addItem('machine')"> ADD M</button>
+    <button class="toolBotton" (click)="addItem('producer')"> ADD Q</button>
+    <button class="toolBotton" (click)="addItem('machine')"> ADD M</button>
     <input class="textBox" type="text" placeholder="from" id="from">
     <input class="textBox" type="text" placeholder="to" id="to">
-    <button (click)="addLine()"> Add Line </button>
+    <button class="toolBotton" (click)="addLine()"> Add Line </button>
     <input class="textBox" type="text" placeholder="number" #number_of_products id="number_of_products">
-    <button (click)="addItem('products')"> ADD Product </button>
-    <button (click)="reset()"> Reset</button>
-    <button> Run</button>
-    <button> Replay</button>
+    <button class="toolBotton" (click)="addItem('products')"> submit </button>
+    <button class="toolBotton" (click)="reset()"> Reset </button>
+    <button class="toolBotton"> Run </button>
 </div>
 <div id="container"></div>
 <div class="listinput" id="listinput">
-    <div class="b">output
-        <!-- ngFor="let item of items; let i = index;" (click)="showDetails(i)" -->
-        <button> {{selectedMachine}} </button>
+    output
+    <div class="b" *ngFor="let item of arr_of_Producers; let i = index;" (click)="showProducts(i)">
+        <button> Q{{arr_of_Producers[i].name()}} </button>
         <!-- item.getitem() -->
     </div>
     <div class="c" *ngFor="let item of arr_of_Products; let i = index;">
-        <!--ngFor="let item of items; let i = index;" (click)="showDetails(i)" -->
+        <!-- ngFor="let item of items; let i = index;" (click)="showDetails(i)" -->
         <button> {{i}} </button>
         <!-- item.getitem() -->
     </div>

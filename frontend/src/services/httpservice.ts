@@ -8,7 +8,7 @@ const httpOptions = {
     })
   };
 @Injectable()
-export class httpsevice{
+export class Httpsevice{
     private Url: string;
     constructor(private http: HttpClient) {
         this.Url = 'http://localhost:8085/producerConsumer/';
@@ -30,5 +30,7 @@ export class httpsevice{
         console.log("Sending request...");
         return this.http.get<void>(this.Url + "addLine",{params:{machineFrom,producerTo,direction}});
     }
+
+    public clear() {}
 
 }

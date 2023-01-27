@@ -1,7 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { httpsevice } from 'src/services/httpservice';
+import { Httpsevice } from 'src/services/httpservice';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -16,7 +16,7 @@ import { AppComponent } from './app.component';
     HttpClientModule,
   ],
   providers:[
-    httpsevice,
+    Httpsevice,
     HttpClient,
   ],
   bootstrap: [AppComponent]

@@ -16,6 +16,7 @@ public class PCService {
     List<Machine> machines = new ArrayList<>();
     List<Product> products = new ArrayList<>();
     List<Thread> threads = new ArrayList<>();
+
     Originator originator = new Originator();
 
     int pCount = 0;
