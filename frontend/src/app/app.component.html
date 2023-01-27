@@ -7,12 +7,12 @@
     <input class="textBox" type="text" placeholder="number" #number_of_products id="number_of_products">
     <button class="toolBotton" (click)="addItem('products')"> submit </button>
     <button class="toolBotton" (click)="reset()"> Reset </button>
-    <button class="toolBotton" (click)="start()"> Run </button>
+    <button class="toolBotton" (click)="getUnit()"> Run </button>
 </div>
 <div id="container"></div>
 <div class="listinput" id="listinput">
     <label class="output">output</label>
-    <div class="b" *ngFor="let item of arr_of_Producers; let i = index;" (click)="showProducts(i)">
+    <div class="b" *ngFor="let item of arr_of_Producers; let i = index;" (click)="showQueueProducts(i)">
         <button> Q{{arr_of_Producers[i].name()}} </button>
         <!-- item.getitem() -->
     </div>

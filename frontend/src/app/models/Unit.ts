@@ -3,18 +3,15 @@ import { Product } from "./Product"
 export class Unit {
 
   machines: string[] = []
-  queues: Array<Product> = []
+  queues: Array<Array<Product>> = []
 
-  constructor(machines: string[], queues: Array<Product>) {
-    this.machines = machines
-    this.queues = queues
-  }
+  constructor() {}
 
   setMachines(machine: string[]) { this.machines = machine }
 
-  setQueues(queues: Array<Product>) { this.queues = queues }
+  setQueues(queues: Array<Array<Product>>) { this.queues = queues }
 
-  getQueues(): Array<Product> { return this.queues }
+  getQueues(): Array<Array<Product>> { return this.queues }
 
   getMachines(): string[] { return this.machines }
 

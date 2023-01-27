@@ -1,6 +1,7 @@
 import { AppComponent } from "../app.component";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Unit } from "../models/Unit";
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -33,8 +34,9 @@ export class Httpsevice{
 
     public getUnit(){
       console.log("Sending request...");
-      return this.http.get<void>(this.Url + "start");
+      return this.http.get<Unit>(this.Url + "getUnit");
     }
+
     public clear() {}
 
 }

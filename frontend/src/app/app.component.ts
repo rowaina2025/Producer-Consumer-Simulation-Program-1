@@ -3,6 +3,8 @@ import Konva from 'konva';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
 import { Httpsevice } from 'src/app/services/httpservice';
+import { Product } from './models/Product';
+import { Unit } from './models/Unit';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +21,11 @@ export class AppComponent implements OnInit{
   Producer_num=-1
   arr_of_Machines:Array<Konva.Label> = [] //for displayed objects
   arr_of_Producers:Array<Konva.Label> = [] //for displayed objects
-  arr_of_Products: Array<number> = []
-  selectedMachine: string = ''
+  arr_of_Products: Product[] = []
+  unit: Unit = new Unit();
+  queueSelected: boolean = true
+  queueNo: number = 0
+
   constructor (private httpService: Httpsevice) {}
 
   ngOnInit(): void {
@@ -97,6 +102,7 @@ export class AppComponent implements OnInit{
     to.value=''
   }
 
+  //Befor initiallization
   addItem(type: string) {
     if(type == "producer") {
       this.shape = 'rect'
@@ -118,10 +124,6 @@ export class AppComponent implements OnInit{
     } else if(type == "products") {
       let producutCount = document.getElementById("number_of_products") as HTMLInputElement
       let count = Number(producutCount.value)
-      for(let i = 1; i<=count; i++){
-        this.arr_of_Products.push(i);
-        console.log(this.arr_of_Products[i-1])
-      }
       if(count >= 0) {
         producutCount.value = ''
         this.httpService.addProducts(count).subscribe()
@@ -129,6 +131,7 @@ export class AppComponent implements OnInit{
     }
   }
 
+  //All objects drawings
   drawShape(shape: string) {
     if(shape == 'circle') {
       this.Machine_num++;
@@ -201,9 +204,33 @@ export class AppComponent implements OnInit{
     }
   }
 
-  showProducts(q: number) {
-
+  showQueueProducts(q: number) {
+    this.queueSelected = true
+    this.queueNo = q
+    //TODO show products window
+    this.getUnit()
   }
 
+  exitProduts() {
+    this.queueSelected = false
+    //TODO remove products window
+  }
 
+  getUnit() {
+    while(true) {
+      this.httpService.getUnit().subscribe((res) => {
+        this.unit.setMachines(res['machines'])
+        this.unit.setQueues(res['queues'])
+        for(let i = 0; i < this.unit.getMachines().length; i++) {
+          //TODO change colors of machines
+        }
+        if(this.queueSelected) {
+          let products = this.unit.getQueues()[this.queueNo]
+          for(let i = 0; i < products.length; i++) {
+            this.arr_of_Products[i] = products[i]
+          }
+        }
+      })
+    }
+  }
 }

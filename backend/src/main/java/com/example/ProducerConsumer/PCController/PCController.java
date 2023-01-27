@@ -2,10 +2,13 @@ package com.example.ProducerConsumer.PCController;
 
 import com.example.ProducerConsumer.model.BlockingQueue;
 import com.example.ProducerConsumer.model.Machine;
+import com.example.ProducerConsumer.model.Product;
 import com.example.ProducerConsumer.model.Unit;
 import com.example.ProducerConsumer.service.PCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Queue;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 public class PCController {
     @Autowired
     PCService service = new PCService();
+
+    boolean firstRun = true;
 
     @GetMapping("/addMachine")
     public int addMachine(@RequestParam int num) {
@@ -44,13 +49,15 @@ public class PCController {
 
     @GetMapping("/getUnit")
     public Unit getUnit() {
+        if(firstRun)
+            service.start();
+        firstRun = false;
         return service.getUnit();
     }
 
-    @GetMapping("/start")
-    public void start() {
-        System.out.println("simulation started");
-        service.start();
+    @GetMapping("/getQueueProduct")
+    public Queue<Product> getQueueProducts(@RequestParam int queueNo) {
+        return service.getProducts(queueNo);
     }
 
 }
