@@ -1,6 +1,8 @@
 package com.example.ProducerConsumer.service;
 
 import com.example.ProducerConsumer.model.*;
+import com.example.ProducerConsumer.snap_shot.CareTaker;
+import com.example.ProducerConsumer.snap_shot.Memento;
 import com.example.ProducerConsumer.snap_shot.Originator;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +22,6 @@ public class PCService {
 
     Originator originator = new Originator();
     Random rand = new Random();
-    int pCount = 0;
-    int mCount = 0;
 
     static String decToHexa(int n) {
         char[] hexaDeciNum = new char[2];
@@ -113,16 +113,24 @@ public class PCService {
     }
 
     public Unit getUnit() {
-        List<String> machines = new ArrayList<>();
+        /*List<String> machines = new ArrayList<>();
         List<Queue<Product>> queues = new ArrayList<>();
         for(int i = 0; i < this.machines.size(); i++) {
             machines.add(this.machines.get(i).getCurrentProduct().getColor());
         }
         for(int i = 0; i < this.queues.size(); i++) {
             queues.add(this.queues.get(i).getQueue());
-        }
+        }*/
         unit.setMachines(machines);
         unit.setQueues(queues);
         return unit;
+    }
+
+    public List<Memento> getMemento() {
+        return CareTaker.getInstance().getMementoList();
+    }
+
+    public List<Long> getTime() {
+        return CareTaker.getInstance().getTime();
     }
 }

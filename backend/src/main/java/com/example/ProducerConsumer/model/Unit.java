@@ -1,27 +1,29 @@
 package com.example.ProducerConsumer.model;
 
-import java.awt.desktop.QuitEvent;
 import java.util.List;
-import java.util.Queue;
 
 public class Unit {
-    private List<Queue<Product>> queues;
-    private List<String> machines;
+    private List<BlockingQueue<Product>> queues;
+    private List<Machine> machines;
 
     public Unit(List<BlockingQueue<Product>> queues, List<Machine> machines) {
-        for(int i = 0; i < queues.size(); i++) {
-            this.queues.add(queues.get(i).getQueue());
-        }
-        for(int i = 0; i < machines.size(); i++) {
-            this.machines.add(machines.get(i).getCurrentProduct().getColor());
-        }
+        this.queues = queues;
+        this.machines = machines;
     }
 
-    public void setQueues(List<Queue<Product>> queues) { this.queues = queues; }
+    public List<BlockingQueue<Product>> getQueues() {
+        return queues;
+    }
 
-    public void setMachines(List<String> machines) { this.machines = machines; }
+    public void setQueues(List<BlockingQueue<Product>> queues) {
+        this.queues = queues;
+    }
 
-    public List<Queue<Product>> getQueues() { return queues; }
+    public List<Machine> getMachines() {
+        return machines;
+    }
 
-    public List<String> getMachines() { return machines; }
+    public void setMachines(List<Machine> machines) {
+        this.machines = machines;
+    }
 }

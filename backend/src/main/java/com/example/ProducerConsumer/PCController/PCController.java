@@ -5,9 +5,11 @@ import com.example.ProducerConsumer.model.Machine;
 import com.example.ProducerConsumer.model.Product;
 import com.example.ProducerConsumer.model.Unit;
 import com.example.ProducerConsumer.service.PCService;
+import com.example.ProducerConsumer.snap_shot.Memento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Queue;
 
 @RestController
@@ -49,7 +51,7 @@ public class PCController {
 
     @GetMapping("/getUnit")
     public Unit getUnit() {
-        if(firstRun)
+        if (firstRun)
             service.start();
         firstRun = false;
         return service.getUnit();
@@ -60,4 +62,13 @@ public class PCController {
         return service.getProducts(queueNo);
     }
 
+    @GetMapping("/getMemento")
+    public List<Memento> getMemento() {
+        return service.getMemento();
+    }
+
+    @GetMapping("/getTime")
+    public List<Long> getTime() {
+        return service.getTime();
+    }
 }

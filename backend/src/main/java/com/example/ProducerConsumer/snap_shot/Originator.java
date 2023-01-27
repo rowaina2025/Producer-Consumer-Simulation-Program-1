@@ -32,7 +32,7 @@ public class Originator {
         return new Memento(machineState, queueState);
     }
 
-    public void getStateFromMementoMachine(Memento memento) {
+    public void getStateFromMemento(Memento memento) {
         machineState = memento.getStateMachine();
         queueState = memento.getStateQueue();
     }
