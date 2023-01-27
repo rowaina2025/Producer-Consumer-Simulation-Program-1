@@ -17,8 +17,8 @@ export class AppComponent implements OnInit{
   konva: any;
   Machine_num=-1
   Producer_num=-1
-  arr_of_Machines:Array<Konva.Label> = []
-  arr_of_Producers:Array<Konva.Label> = []
+  arr_of_Machines:Array<Konva.Label> = [] //for displayed objects
+  arr_of_Producers:Array<Konva.Label> = [] //for displayed objects
   arr_of_Products: Array<number> = []
   selectedMachine: string = ''
   constructor (private httpService: Httpsevice) {}
@@ -205,9 +205,5 @@ export class AppComponent implements OnInit{
 
   }
 
-  start(){
-    this.httpService.getUnit().subscribe((res)=>{
 
-    });
-  }
 }
