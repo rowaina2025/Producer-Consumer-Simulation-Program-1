@@ -123,11 +123,8 @@ export class AppComponent implements OnInit{
         console.log(this.arr_of_Products[i-1])
       }
       if(count >= 0) {
+        producutCount.value = ''
         this.httpService.addProducts(count).subscribe()
-      }
-      for(let i = 1; i<=count; i++){
-        this.arr_of_Products.push(i);
-        console.log(this.arr_of_Products[i-1])
       }
     }
   }
