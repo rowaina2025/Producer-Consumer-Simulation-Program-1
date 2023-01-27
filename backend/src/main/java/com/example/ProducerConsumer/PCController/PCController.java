@@ -47,4 +47,10 @@ public class PCController {
         return service.getUnit();
     }
 
+    @GetMapping("/start")
+    public void start() {
+        System.out.println("simulation started");
+        service.start();
+    }
+
 }

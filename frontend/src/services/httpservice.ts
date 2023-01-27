@@ -30,7 +30,11 @@ export class Httpsevice{
         console.log("Sending request...");
         return this.http.get<void>(this.Url + "addLine",{params:{machineFrom,producerTo,direction}});
     }
-
+ 
+    public start(){
+      console.log("Sending request...");
+      return this.http.get<void>(this.Url + "start");
+    }
     public clear() {}
 
 }

@@ -56,7 +56,9 @@ export class AppComponent implements OnInit{
     this.Producer_num=-1
     this.httpService.clear()
   }
-
+  start(){
+    this.httpService.start().subscribe();
+  }
   addLine(){
     let shape1:any
     let shape2:any
