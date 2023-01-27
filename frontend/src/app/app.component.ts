@@ -266,6 +266,9 @@ export class AppComponent implements OnInit{
         }
         count++
       }
+      for(let i = 0; i < this.arr_of_Machines.length ; i++) {
+        this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: "white", })
+      }
     })
   }
 
