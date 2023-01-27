@@ -4,6 +4,7 @@ import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
 import { reduce } from 'rxjs';
 import { Httpsevice } from 'src/app/services/httpservice';
+import { Memento } from './models/Memeonto';
 import { Product } from './models/Product';
 import { Unit } from './models/Unit';
 
@@ -26,6 +27,8 @@ export class AppComponent implements OnInit{
   unit: Unit = new Unit();
   queueSelected: boolean = true
   queueNo: number = 0
+  mementoList: Memento[] = []
+  timeList: number[] = []
 
   constructor (private httpService: Httpsevice) {}
 
@@ -38,16 +41,19 @@ export class AppComponent implements OnInit{
     this.layer = new Layer();
     this.stage.add(this.layer);
 
+    this.stage.on("mousedown",(e) => {
+      console.log(e.target.attrs.name)
+      if(e.target!=this.stage){
+      this.httpService.getProduct(e.target.attrs.name[1]).subscribe((res)=>{
+        this.arr_of_Products=res
+        console.log(res)
 
+      })}
+    });
   }
 
   reset(){
-    // this.stage.on("mousedown",(e) => {
-    //   console.log( this.arr_of_Producers[parseInt(e.target.attrs.name[1])].children?.at(0)?.setAttrs({
-    //     fill:'red',
-    //   }))
 
-    // });
     this.stage.destroy();
     this.stage = new Stage({
       container: "container",
@@ -64,7 +70,7 @@ export class AppComponent implements OnInit{
     this.arr_of_Products = []
     this.Machine_num=-1
     this.Producer_num=-1
-    this.httpService.clear()
+    this.httpService.clear().subscribe()
   }
 
   addLine(){
@@ -130,7 +136,6 @@ export class AppComponent implements OnInit{
       let producutCount = document.getElementById("number_of_products") as HTMLInputElement
       let count = Number(producutCount.value)
       if(count >= 0) {
-        producutCount.value = ''
         this.httpService.addProducts(count).subscribe()
       }
     }
@@ -151,8 +156,8 @@ export class AppComponent implements OnInit{
       })
       consumer.add(
         new Konva.Tag({
-          fill: 'lightblue',
-          stroke:"blue ",
+          fill: 'white',
+          stroke: "black",
           cornerRadius: 50
         })
       )
@@ -162,7 +167,7 @@ export class AppComponent implements OnInit{
           padding: 10,
           width: 70,
           height:70,
-          fill: 'white',
+          fill: 'black',
           fontSize: 20,
           align: 'center',
           verticalAlign: 'middle' ,
@@ -185,8 +190,8 @@ export class AppComponent implements OnInit{
       })
       producer.add(
         new Konva.Tag({
-          fill:'lightgreen' ,
-          stroke: "orange",
+          fill: 'white',
+          stroke: "black",
         })
       )
       producer.add(
@@ -195,7 +200,7 @@ export class AppComponent implements OnInit{
           padding: 10,
           width: 80,
           height: 50,
-          fill: 'white',
+          fill: 'black',
           fontSize: 20,
           align: 'center',
           verticalAlign: 'middle' ,
@@ -226,22 +231,56 @@ export class AppComponent implements OnInit{
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  getUnit() {
-    this.httpService.getUnit().subscribe(async (res) => {
-      await this.delay(100);
+  async getUnit() {
+    let producutCount = document.getElementById("number_of_products") as HTMLInputElement
+    let count = Number(producutCount.value)
+   // this.httpService.start().subscribe()
+    while(true){
+      let res = await this.httpService.getUnit()
       let machine = res['machines']
-      console.log(machine)
-      for(let i = 0; i < this.arr_of_Machines.length; i++) {
-        this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: machine.currentProduct.color, })
+      // console.log(machine)
+      console.log(res['machines'])
+      for(let i = 0; i < this.arr_of_Machines.length && machine[i]['currentProduct']!=null ; i++) {
+        this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: machine[i]['currentProduct'].color, })
       }
-      this.stage.on("mousedown",(e) => {
-        console.log(e.target.attrs.name)
-        this.httpService.getProduct(e.target.attrs.name[1]).subscribe((res)=>{
-          console.log(res)
-        })
-      });
+
+      if( res['queues'][res['queues'].length-1]['queue'].length==count ){
+        console.log("finished sssssssssssssssssssssss")
+        break
+      }
+      await this.delay(500);
+    }
+  }
+
+  replay() {
+    this.httpService.getMamentoList().subscribe(async (res) => {
+      console.log(res)
+      for(let i = 0; i < res.length; i++) {
+        let memento = new Memento()
+        console.log(res[i]['stateQueue'])
+        memento.stateMachine = res[i]['stateMachine']
+        memento.stateQueue = res[i]['stateQueue']
+        console.log(memento)
+        this.mementoList.push(memento)
+      }
+      this.getTime()
+      await this.delay(3000);
+      console.log(this.timeList)
+      let count = 0
+      for(let memento of this.mementoList) {
+        if(memento.stateMachine != null) {
+          this.arr_of_Machines[memento.stateMachine.num].children?.at(0)?.setAttrs({ fill: memento.stateMachine.currentProduct.color, })
+          await this.delay(this.timeList[++count]);
+        }
+      }
+    })
+  }
+
+  getTime() {
+    this.httpService.getMementoTime().subscribe((res) => {
+      for(let i = 0; i < res.length; i++) {
+        this.timeList.push(res[i])
+      }
     })
   }
 }
-
-
