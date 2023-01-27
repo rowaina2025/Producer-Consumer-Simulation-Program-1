@@ -3,7 +3,7 @@ import { Machine } from "./Machine"
 
 export class Unit {
 
-  machines: Machine = new Machine()
+  machines: Machine []=[]
   queues: BlockingQueue[] = []
 
   constructor() {}

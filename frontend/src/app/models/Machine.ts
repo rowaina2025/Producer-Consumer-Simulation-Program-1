@@ -7,6 +7,7 @@ export class Machine {
   currentProduct: Product = new Product()
   fromQueue: BlockingQueue = new BlockingQueue()
   toQueue: BlockingQueue = new BlockingQueue()
+  empty: boolean = true
 
   constructor(){}
 }
