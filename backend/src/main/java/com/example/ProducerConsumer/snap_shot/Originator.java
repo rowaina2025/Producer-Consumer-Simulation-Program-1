@@ -13,7 +13,9 @@ public class Originator {
     private BlockingQueue<Product> queueState;
 
     public void setState(Machine machineState, BlockingQueue<Product> queueState) {
-        this.machineState = machineState == null ? null : new Machine(machineState.getNum());
+        Machine savedMachine = new Machine(machineState.getNum());
+        savedMachine.setCurrentProduct(machineState.getCurrentProduct());
+        this.machineState = machineState == null ? null : savedMachine;
         this.queueState = new BlockingQueue<>(queueState.getNum());
         Queue<Product> products = new LinkedList(queueState.getQueue());
         this.queueState.setQueue(products);

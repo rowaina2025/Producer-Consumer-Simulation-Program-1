@@ -134,4 +134,15 @@ public class PCService {
     public List<Long> getTime() {
         return CareTaker.getInstance().getTime();
     }
+
+    public void clear() {
+        queues.clear();
+        machines.clear();
+        products.clear();
+        CareTaker.getInstance().clear();
+        for (Thread thread : threads) {
+            thread.interrupt();
+        }
+        threads.clear();
+    }
 }

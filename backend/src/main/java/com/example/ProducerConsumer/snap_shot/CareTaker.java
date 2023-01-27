@@ -47,9 +47,6 @@ public class CareTaker {
     }
 
     public void clear() {
-        mementoList.clear();
-        time.clear();
-        prevTime = 0;
-        startTime = System.currentTimeMillis();
+        careTaker = null;
     }
 }

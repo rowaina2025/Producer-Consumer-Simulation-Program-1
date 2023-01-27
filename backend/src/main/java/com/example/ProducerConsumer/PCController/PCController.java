@@ -71,4 +71,9 @@ public class PCController {
     public List<Long> getTime() {
         return service.getTime();
     }
+
+    @GetMapping("/clear")
+    public void clear() {
+        service.clear();
+    }
 }
