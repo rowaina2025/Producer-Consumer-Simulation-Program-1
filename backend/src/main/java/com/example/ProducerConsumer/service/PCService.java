@@ -1,9 +1,6 @@
 package com.example.ProducerConsumer.service;
 
-import com.example.ProducerConsumer.model.BlockingQueue;
-import com.example.ProducerConsumer.model.Machine;
-import com.example.ProducerConsumer.model.Producer;
-import com.example.ProducerConsumer.model.Product;
+import com.example.ProducerConsumer.model.*;
 import com.example.ProducerConsumer.snap_shot.Originator;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +9,11 @@ import java.util.List;
 
 @Service
 public class PCService {
-    List<BlockingQueue> queues = new ArrayList<>();
+    List<BlockingQueue<Product>> queues = new ArrayList<>();
     List<Machine> machines = new ArrayList<>();
     List<Product> products = new ArrayList<>();
     List<Thread> threads = new ArrayList<>();
+    Unit unit = new Unit(queues, machines);
 
     Originator originator = new Originator();
 
@@ -25,7 +23,7 @@ public class PCService {
     public void addProducts(Integer productCount) { //take num return array
         //TODO add random number and color
         for (int i = 0; i < productCount; i++) {
-            products.add(new Product(0, "555555"));
+            products.add(new Product(i, "555555"));
         }
     }
 
@@ -34,7 +32,7 @@ public class PCService {
         threads.add(new Thread(machine, String.valueOf(machine.getNum())));
     }
 
-    public void addQueue(BlockingQueue queue) {
+    public void addQueue(BlockingQueue<Product> queue) {
         queues.add(queue);
     }
 
@@ -47,7 +45,7 @@ public class PCService {
         }
     }
 
-    public List<Product> getProducts() {
+    public List<Product> getProducts(int queueNo) {
         return products;
     }
 
@@ -60,5 +58,13 @@ public class PCService {
             thread.start();
             System.out.println(thread.getName() + " started");
         }
+    }
+
+    public Unit getUnit() {
+        while (queues.get(1).getQueue().size() < products.size()) {
+            unit.setMachines(machines);
+            unit.setQueues(queues);
+        }
+        return unit;
     }
 }

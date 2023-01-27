@@ -2,6 +2,7 @@ package com.example.ProducerConsumer.PCController;
 
 import com.example.ProducerConsumer.model.BlockingQueue;
 import com.example.ProducerConsumer.model.Machine;
+import com.example.ProducerConsumer.model.Unit;
 import com.example.ProducerConsumer.service.PCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,9 @@ public class PCController {
         service.addLine(machineFrom, producerTo, direction);
     }
 
-    
+    @GetMapping("/getUnit")
+    public Unit getUnit() {
+        return service.getUnit();
+    }
 
 }

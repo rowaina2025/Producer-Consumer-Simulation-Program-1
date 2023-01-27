@@ -99,8 +99,8 @@ public class Machine implements Consumer, Observer {
         this.fromQueue = fromQueue;
     }
 
-    public void setToQueue(BlockingQueue<Product> fromQueue) {
-        this.fromQueue = fromQueue;
+    public void setToQueue(BlockingQueue<Product> toQueue) {
+        this.toQueue = toQueue;
     }
 
     public void update() {

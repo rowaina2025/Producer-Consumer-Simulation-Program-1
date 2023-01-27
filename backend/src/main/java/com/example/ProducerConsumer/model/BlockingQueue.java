@@ -53,8 +53,11 @@ public class BlockingQueue<Product> implements Observable {
     }
 
     public void notifyObservers() {
-        for (Observer observer : observers)
+        // notifies first observer
+        for (Observer observer : observers) {
             observer.update();
+            break;
+        }
     }
 
     public boolean getState() {
