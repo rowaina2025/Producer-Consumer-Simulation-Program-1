@@ -47,6 +47,7 @@ public class Machine implements Consumer, Observer {
         System.out.println("Machine " + num + " is not waiting ");
         fromQueue.detach(this);// unsubscribe
         this.currentProduct = fromQueue.take();
+        System.out.println(this.currentProduct);
         saveState(fromQueue);
     }
 
