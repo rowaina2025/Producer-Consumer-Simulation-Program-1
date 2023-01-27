@@ -60,38 +60,38 @@ public class ProducerConsumerApplication {
         c4.start();
         System.out.println("c4 started");*/
         //@Autowired
-        PCService service = new PCService();
+//        PCService service = new PCService();
         //service.addMachine(new Machine(0));
 
-        service.addMachine(new Machine(0));
-        service.addMachine(new Machine(1));
-        service.addMachine(new Machine(2));
-        service.addQueue(new BlockingQueue(0));
-        service.addQueue(new BlockingQueue(1));
-        service.addLine(0, 0, true);
-
-        service.addLine(1, 0, true);
-        service.addLine(2, 0, true);
-        service.addLine(0, 1, false);
-
-        service.addLine(1, 1, false);
-        service.addLine(2, 1, false);
-        service.addProducts(10);
-        service.start();
-
-        Unit unit = service.getUnit();
-        System.out.println("unit");
-
-        System.out.println(unit);
-        for (Machine machine : unit.getMachines()) {
-            System.out.println("Machine" + machine.getNum() + " has " + machine.getCurrentProduct());
-        }
-        for (BlockingQueue<Product> queue : unit.getQueues()) {
-            System.out.println("queue" + queue.getNum() + " has ");
-            for (Product p : queue.getQueue()) {
-                System.out.println(p.getNum() + " " + p.getColor());
-            }
-        }
+//        service.addMachine(new Machine(0));
+//        service.addMachine(new Machine(1));
+//        service.addMachine(new Machine(2));
+//        service.addQueue(new BlockingQueue(0));
+//        service.addQueue(new BlockingQueue(1));
+//        service.addLine(0, 0, true);
+//
+//        service.addLine(1, 0, true);
+//        service.addLine(2, 0, true);
+//        service.addLine(0, 1, false);
+//
+//        service.addLine(1, 1, false);
+//        service.addLine(2, 1, false);
+//        service.addProducts(10);
+//        service.start();
+//
+//        Unit unit = service.getUnit();
+//        System.out.println("unit");
+//
+//        System.out.println(unit);
+//        for (Machine machine : unit.getMachines()) {
+//            System.out.println("Machine" + machine.getNum() + " has " + machine.getCurrentProduct());
+//        }
+//        for (BlockingQueue<Product> queue : unit.getQueues()) {
+//            System.out.println("queue" + queue.getNum() + " has ");
+//            for (Product p : queue.getQueue()) {
+//                System.out.println(p.getNum() + " " + p.getColor());
+//            }
+//        }
 
 //        int countQ = 0;
 //        int countM = 0;

@@ -114,7 +114,7 @@ export class AppComponent implements OnInit{
   }
 
   //Befor initiallization
-  addItem(type: string) {
+  async addItem(type: string) {
     if(type == "producer") {
       this.shape = 'rect'
       this.stage.on("mousedown",(e) => {
@@ -133,6 +133,7 @@ export class AppComponent implements OnInit{
         }
       });
     } else if(type == "products") {
+      let res = await this.httpService.getUnit()
       let producutCount = document.getElementById("number_of_products") as HTMLInputElement
       let count = Number(producutCount.value)
       if(count >= 0) {
@@ -215,23 +216,23 @@ export class AppComponent implements OnInit{
     }
   }
 
-  showQueueProducts(q: number) {
-    this.queueSelected = true
-    this.queueNo = q
-    //TODO show products window
-    this.getUnit()
-  }
+  // showQueueProducts(q: number) {
+  //   this.queueSelected = true
+  //   this.queueNo = q
+  //   //TODO show products window
+  //   this.getUnit()
+  // }
 
-  exitProduts() {
-    this.queueSelected = false
-    //TODO remove products window
-  }
+  // exitProduts() {
+  //   this.queueSelected = false
+  //   //TODO remove products window
+  // }
 
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  async getUnit() {
+  /* async getUnit() {
     let producutCount = document.getElementById("number_of_products") as HTMLInputElement
     let count = Number(producutCount.value)
    // this.httpService.start().subscribe()
@@ -246,13 +247,18 @@ export class AppComponent implements OnInit{
 
       if( res['queues'][res['queues'].length-1]['queue'].length==count ){
         console.log("finished sssssssssssssssssssssss")
+        for(let i = 0; i < this.arr_of_Machines.length && machine[i]['currentProduct']!=null ; i++) {
+          this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: "white", })
+        }
         break
       }
       await this.delay(500);
     }
-  }
+  } */
 
   replay() {
+    this.mementoList = []
+    this.timeList = []
     this.httpService.getMamentoList().subscribe(async (res) => {
       console.log(res)
       for(let i = 0; i < res.length; i++) {
@@ -266,12 +272,13 @@ export class AppComponent implements OnInit{
       this.getTime()
       await this.delay(3000);
       console.log(this.timeList)
-      let count = 0
+      let count = 1
       for(let memento of this.mementoList) {
-        if(memento.stateMachine != null) {
+        if(memento.stateMachine.num != -1 && memento.stateMachine.currentProduct != null) {
           this.arr_of_Machines[memento.stateMachine.num].children?.at(0)?.setAttrs({ fill: memento.stateMachine.currentProduct.color, })
-          await this.delay(this.timeList[++count]);
+          await this.delay(this.timeList[count]);
         }
+        count++
       }
     })
   }
