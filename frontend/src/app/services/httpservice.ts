@@ -2,6 +2,7 @@ import { AppComponent } from "../app.component";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Unit } from "../models/Unit";
+import { Product } from "../models/Product";
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -35,6 +36,10 @@ export class Httpsevice{
     public getUnit(){
       console.log("Sending request...");
       return this.http.get<Unit>(this.Url + "getUnit");
+    }
+    public getProduct(queueNo:number){
+      console.log("Sending request...");
+      return this.http.get<Array<Product>>(this.Url + "getQueueProduct",{params:{queueNo}});
     }
 
     public clear() {}

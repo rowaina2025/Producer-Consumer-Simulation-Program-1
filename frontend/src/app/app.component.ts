@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Konva from 'konva';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
+import { reduce } from 'rxjs';
 import { Httpsevice } from 'src/app/services/httpservice';
 import { Product } from './models/Product';
 import { Unit } from './models/Unit';
@@ -37,12 +38,16 @@ export class AppComponent implements OnInit{
     this.layer = new Layer();
     this.stage.add(this.layer);
 
-    this.stage.on("mousedown",(e) => {
-      console.log(e.target.attrs.name)
-    });
+
   }
 
   reset(){
+    // this.stage.on("mousedown",(e) => {
+    //   console.log( this.arr_of_Producers[parseInt(e.target.attrs.name[1])].children?.at(0)?.setAttrs({
+    //     fill:'red',
+    //   }))
+
+    // });
     this.stage.destroy();
     this.stage = new Stage({
       container: "container",
@@ -142,6 +147,7 @@ export class AppComponent implements OnInit{
         draggable:true,
         width: 50,
         height:50,
+
       })
       consumer.add(
         new Konva.Tag({
@@ -217,20 +223,20 @@ export class AppComponent implements OnInit{
   }
 
   getUnit() {
-    while(true) {
-      this.httpService.getUnit().subscribe((res) => {
-        this.unit.setMachines(res['machines'])
-        this.unit.setQueues(res['queues'])
-        for(let i = 0; i < this.unit.getMachines().length; i++) {
-          //TODO change colors of machines
-        }
-        if(this.queueSelected) {
-          let products = this.unit.getQueues()[this.queueNo]
-          for(let i = 0; i < products.length; i++) {
-            this.arr_of_Products[i] = products[i]
-          }
-        }
-      })
-    }
+    this.httpService.getUnit().subscribe((res) => {
+      let machine = res['machines']
+      console.log(machine)
+      for(let i = 0; i < this.arr_of_Machines.length; i++) {
+        this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: machine.currentProduct.color, })
+      }
+      this.stage.on("mousedown",(e) => {
+        console.log(e.target.attrs.name)
+        this.httpService.getProduct(e.target.attrs.name[1]).subscribe((res)=>{
+          console.log(res)
+        })
+      });
+    })
   }
 }
+
+
