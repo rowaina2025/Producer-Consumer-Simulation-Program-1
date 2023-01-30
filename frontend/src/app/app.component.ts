@@ -7,6 +7,8 @@ import { Httpsevice } from 'src/app/services/httpservice';
 import { Memento } from './models/Memeonto';
 import { Product } from './models/Product';
 import { Unit } from './models/Unit';
+import { PCComponent } from './component-factory/PCComponent';
+import { ComponentsFactory } from './component-factory/ComponentsFactory';
 
 @Component({
   selector: 'app-root',
@@ -17,16 +19,13 @@ export class AppComponent implements OnInit{
   stage!: Stage;
   layer!: Layer;
   shape: string = '';
-  title = 'frontend';
+  title = 'producer_consumer';
   konva: any;
-  Machine_num=-1
-  Producer_num=-1
+  Machine_num = -1
+  Producer_num = -1
   arr_of_Machines:Array<Konva.Label> = [] //for displayed objects
   arr_of_Producers:Array<Konva.Label> = [] //for displayed objects
   arr_of_Products: Product[] = []
-  unit: Unit = new Unit();
-  queueSelected: boolean = true
-  queueNo: number = 0
   mementoList: Memento[] = []
   timeList: number[] = []
 
@@ -46,14 +45,11 @@ export class AppComponent implements OnInit{
       if(e.target!=this.stage){
       this.httpService.getProduct(e.target.attrs.name[1]).subscribe((res)=>{
         this.arr_of_Products=res
-        console.log(res)
-
       })}
     });
   }
 
   reset(){
-
     this.stage.destroy();
     this.stage = new Stage({
       container: "container",
@@ -74,43 +70,43 @@ export class AppComponent implements OnInit{
   }
 
   addLine(){
-    let shape1:any
-    let shape2:any
-    let first_pointx:any
-    let first_pointy:any
-    let second_pointx :any
-    let second_pointy:any
-    let from= document.getElementById("from") as HTMLInputElement
+    let shape1: any
+    let shape2: any
+    let first_pointx: any
+    let first_pointy: any
+    let second_pointx: any
+    let second_pointy: any
+    let from = document.getElementById("from") as HTMLInputElement
     let to= document.getElementById("to") as HTMLInputElement
     if(from.value[0] =='Q'&& to.value[0]=='M'){
-      shape1=this.arr_of_Producers[parseInt(from.value[1])]
-      shape2=this.arr_of_Machines[parseInt(to.value[1])]
+      shape1 = this.arr_of_Producers[parseInt(from.value[1])]
+      shape2 = this.arr_of_Machines[parseInt(to.value[1])]
       shape1.setAttrs(false).draggable(false)
       shape2.setAttrs(false).draggable(false)
       this.httpService.addLine(parseInt(to.value[1]),parseInt(from.value[1]), true).subscribe()
     } else if(from.value[0] == 'M' && to.value[0] == 'Q'){
-      shape1=this.arr_of_Machines[parseInt(from.value[1])]
-      shape2=this.arr_of_Producers[parseInt(to.value[1])]
+      shape1 = this.arr_of_Machines[parseInt(from.value[1])]
+      shape2 = this.arr_of_Producers[parseInt(to.value[1])]
       shape1.setAttrs(false).draggable(false)
       shape2.setAttrs(false).draggable(false)
       this.httpService.addLine(parseInt(from.value[1]),parseInt(to.value[1]), false).subscribe()
     } else {
-      from.value=''
-      to.value=''
+      from.value = ''
+      to.value = ''
       return
     }
-      first_pointx =  (shape1.attrs.x * 2+shape1.attrs.width)/2
-      first_pointy =  (shape1.attrs.y * 2+shape1.attrs.height)/2
-      second_pointx = (shape2.attrs.x * 2+shape2.attrs.width)/2
-      second_pointy = (shape2.attrs.y * 2+shape2.attrs.height)/2
+    first_pointx = (shape1.attrs.x * 2 + shape1.attrs.width) / 2
+    first_pointy = (shape1.attrs.y * 2 + shape1.attrs.height) / 2
+    second_pointx = (shape2.attrs.x * 2 + shape2.attrs.width) / 2
+    second_pointy = (shape2.attrs.y * 2 + shape2.attrs.height) / 2
     let arrow = new Konva.Arrow({
-      points: [first_pointx,first_pointy,second_pointx,second_pointy],
+      points: [first_pointx, first_pointy, second_pointx, second_pointy],
       stroke: '#505050',
       fill: '#505050'
     });
     this.layer.add(arrow)
-    from.value=''
-    to.value=''
+    from.value = ''
+    to.value = ''
   }
 
   //Befor initiallization
@@ -134,83 +130,27 @@ export class AppComponent implements OnInit{
       });
     } else if(type == "products") {
       let producutCounts = document.getElementById("number_of_products") as HTMLInputElement
-      let counts = Number(producutCounts.value)
-      if(counts >= 0) {
-        this.httpService.addProducts(counts).subscribe()
+      let count = Number(producutCounts.value)
+      if(count >= 0) {
+        this.httpService.addProducts(count).subscribe()
       }
     }
   }
 
   //All objects drawings
   drawShape(shape: string) {
+    let componentsFactory = new ComponentsFactory()
     if(shape == 'circle') {
       this.Machine_num++;
-      let consumer = new Konva.Label({
-        name: ''+this.Machine_num as string,
-        x: this.stage?.getRelativePointerPosition()?.x,
-        y: this.stage?.getRelativePointerPosition()?.y,
-        draggable:true,
-        width: 50,
-        height:50,
-
-      })
-      consumer.add(
-        new Konva.Tag({
-          fill: 'white',
-          stroke: "black",
-          cornerRadius: 50
-        })
-      )
-      consumer.add(
-        new Konva.Text({
-          text: 'M'+ this.Machine_num as string,
-          padding: 10,
-          width: 70,
-          height:70,
-          fill: 'black',
-          fontSize: 20,
-          align: 'center',
-          verticalAlign: 'middle' ,
-          name: 'M'+ this.Machine_num as string,
-        })
-      )
-      console.log(parseInt(consumer.attrs.name))
+      let consumer = componentsFactory.getComponent(new PCComponent('consumer', 'white', this.stage?.getRelativePointerPosition()?.x, this.stage?.getRelativePointerPosition()?.y, 0, 0, this.Machine_num))
       this.layer.add(consumer)
       this.arr_of_Machines.push(consumer)
       this.httpService.addMachine(parseInt(consumer.attrs.name)).subscribe()
     } else if(shape == 'rect') {
       this.Producer_num++
-      let producer = new Konva.Label({
-        name: ''+this.Producer_num as string,
-        x: this.stage?.getRelativePointerPosition()?.x,
-        y: this.stage?.getRelativePointerPosition()?.y,
-        draggable:true,
-        width: 50,
-        height:50,
-      })
-      producer.add(
-        new Konva.Tag({
-          fill: 'white',
-          stroke: "black",
-        })
-      )
-      producer.add(
-        new Konva.Text({
-          text: 'Q'+ this.Producer_num as string,
-          padding: 10,
-          width: 80,
-          height: 50,
-          fill: 'black',
-          fontSize: 20,
-          align: 'center',
-          verticalAlign: 'middle' ,
-          name: 'Q'+ this.Producer_num as string,
-        })
-      )
-      console.log(parseInt(producer.attrs.name))
+      let producer = componentsFactory.getComponent(new PCComponent('producer', 'white', this.stage?.getRelativePointerPosition()?.x, this.stage?.getRelativePointerPosition()?.y, 0, 0, this.Producer_num))
       this.layer.add(producer)
       this.arr_of_Producers.push(producer)
-      console.log(this.arr_of_Producers)
       this.httpService.addProducer(parseInt(producer.attrs.name)).subscribe()//send to back
     }
   }
@@ -222,20 +162,14 @@ export class AppComponent implements OnInit{
   async getUnit() {
     let producutCount = document.getElementById("number_of_products") as HTMLInputElement
     let count = Number(producutCount.value)
-   // this.httpService.start().subscribe()
     while(true){
       let res = await this.httpService.getUnit()
       let machine = res['machines']
-      // console.log(machine)
-      console.log(res['machines'])
-      /* for(let i = 0; i < this.arr_of_Machines.length && machine[i]['currentProduct']!=null ; i++) {
+      for(let i = 0; i < this.arr_of_Machines.length && machine[i]['currentProduct']!=null ; i++) {
         this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: machine[i]['currentProduct'].color, })
-      } */
+      }
 
       if( res['queues'][res['queues'].length-1]['queue'].length==count ){
-        console.log("finished sssssssssssssssssssssss")
-        
-        this.replay();
         for(let i = 0; i < this.arr_of_Machines.length ; i++) {
           this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: "white", })
         }
@@ -247,7 +181,6 @@ export class AppComponent implements OnInit{
   }
 
   replay() {
-
     this.mementoList = []
     this.timeList = []
     this.httpService.getMamentoList().subscribe(async (res) => {
