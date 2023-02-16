@@ -5,14 +5,14 @@ import { ConsumerComponent } from "./ConsumerComponent";
 
 export class ComponentsFactory {
 
-  pcComponent: PCComponent
+  constructor(){}
 
   getComponent(shapeDate: PCComponent): Konva.Label{
     if(shapeDate.getType() == 'producer') {
-      let producer = this.pcComponent as producerComponent
+      let producer = new producerComponent()
       return producer.getProducerShape(shapeDate)
     } else if(shapeDate.getType() == 'consumer') {
-      let consumer = this.pcComponent as ConsumerComponent
+      let consumer = new ConsumerComponent()
       return consumer.getConsumerShape(shapeDate)
     } else {
       return null

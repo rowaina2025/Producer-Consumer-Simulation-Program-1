@@ -7,14 +7,20 @@ export class PCComponent {
   private name: number
   private type: string
 
-  constructor(type: string, color: string, x: number, y: number, endX: number, endY: number, name: number) {
-    this.color = color
-    this.x = x
-    this.y = y
-    this.endX = endX
-    this.endY = endY
-    this.name = name
-    this.type = type
+  constructor(type: string, color: string, x: number, y: number, endX: number, endY: number, name: number);
+
+  constructor();
+
+  constructor(type?: string, color?: string,  x?: number, y?: number, endX?: number, endY?: number, name?: number){
+    if(type) {
+      this.color = color
+      this.x = x
+      this.y = y
+      this.endX = endX
+      this.endY = endY
+      this.name = name
+      this.type = type
+    }
   }
 
   getColor(): string { return this.color }
