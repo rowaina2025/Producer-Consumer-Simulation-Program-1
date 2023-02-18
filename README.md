@@ -24,9 +24,9 @@
 - Products have random input rate (5 seconds maximum).
 - Each machine has random service time (5 seconds maximum).
 ## UML class diagram
-###Backend:
+### Backend:
 [![image](https://www.linkpicture.com/q/backPC.png)](https://www.linkpicture.com/view.php?img=LPic63f15cc67d7cb56495466)
-###Frontend:
+### Frontend:
 [![image](https://www.linkpicture.com/q/frontPC.png)](https://www.linkpicture.com/view.php?img=LPic63f15ceef3080109415909)
 ## User manual to run the code
 + In **cmd** cd to **backend folder** and run ./mvnw spring-boot: run or by opening the folder with java IDE then run the main file ProducerConsumerApplication.java
