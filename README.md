@@ -5,8 +5,8 @@
 ## Model-View-Controller(MVC)
 ## UML class diagram
 ## User manual to run the code
-+ In cmd cd to backend folder and run ./mvnw spring-boot: run or by opening the folder with java IDE then run the main file ProducerConsumerApplication.java
-+ Open frontend folder and open new terminal then type **ng serve** and navigate to this link http://localhost:4200/
++ In **cmd** cd to **backend folder** and run ./mvnw spring-boot: run or by opening the folder with java IDE then run the main file ProducerConsumerApplication.java
++ Open **frontend folder** and open new terminal then type **ng serve** and navigate to this link http://localhost:4200/
 
 ## Program UI
 ## User Guide
