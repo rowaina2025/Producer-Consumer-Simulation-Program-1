@@ -15,18 +15,18 @@
 - It was required to graphically implement Qs and Ms, connect them via UI arbitrarily, The input (products arriving at Q0 to get processed) has a random input rate, Each M has a random service time and can serve one product at a time. Once completed, it needs to check the queue if waiting products need to be consumed, if not then it needs to register itself to the queue as ready.
 - Each machine is running and processing its products on a separate thread different from other machines’ processing threads. The UI shows the simulation by displaying the number of elements in the Qs in real time.
 # Design_patterns_applied
-1. **Concurrency: “ Producer/Consumer DP”**
+### 1. **Concurrency: “ Producer/Consumer DP”**
 * Each machine runs on a separate thread consuming products from a queue such that if the queue is empty, it waits, otherwise it takes a product from the queue and processes it for its service time.
-2. **Observer:**
+### 2. **Observer:**
 * Each machine is an observer which observes the queues -observable- it consumes its products from.
 * When the queue is empty, it registers itself to the queue as an observer and waits for notification.
 * When the queue contains elements, it notifies its observers so they can consume them.
-3. **Snapshot:**
+### 3. **Snapshot:**
 * System keeps states of its machines and queues once updated so we can replay the whole simulation again.
 * A Memento class saves the state of the machine and the queue.
 * An Originator class to save the states.
 * A CareTaker class to retrieve the state.
-4. **Singleton:**
+### 4. **Singleton:**
 * CareTaker class implements singleton to have only one instance of it.
 # Design_Decisions
 - User should specify the total number of products at the beginning.
