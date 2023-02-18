@@ -5,11 +5,11 @@
 | --------------- | ------------- |
 |       1         | [Project Overview](#Project_Overview)  |
 |       2         | [Design patterns applied](#Design_patterns_applied)  |
-|       3         | [Design_Decisions](#Design_Decisions)  |
+|       3         | [Design Decisions](#Design_Decisions)  |
 |       4         | [UML class diagram](#UML_class_diagram)  |
-|       5         | [User_manual_to_run_the_code](#User_manual_to_run_the_code)  |
+|       5         | [User manual to run the code](#User_manual_to_run_the_code)  |
 |       6         | [Program_UI](#Program_UI)  |
-|       7         | [User_Guide](#User_Guide)  |
+|       7         | [User Guide](#User_Guide)  |
 
 # Project_Overview
 - It was required to graphically implement Qs and Ms, connect them via UI arbitrarily, The input (products arriving at Q0 to get processed) has a random input rate, Each M has a random service time and can serve one product at a time. Once completed, it needs to check the queue if waiting products need to be consumed, if not then it needs to register itself to the queue as ready.
