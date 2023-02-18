@@ -18,7 +18,6 @@
 * A CareTaker class to retrieve the state.
 4. **Singleton:**
 * CareTaker class implements singleton to have only one instance of it.
-## Model-View-Controller(MVC)
 ## Design Decisions:
 - User should specify the total number of products at the beginning.
 - User can’t connect 2 queues or 2 machines together.
