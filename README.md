@@ -13,10 +13,7 @@
 |       8         | [User Guide](#User_Guide)  |
 
 # Description:
-### An assembly line that produces different products consists of different processing machines Ms that are
-responsible for processing the product at different stages and queue Qs to handle product movement
-between different processing stages. In this assignment, we will develop a simulation
-program to simulate this production line as a queuing network.
+### An assembly line that produces different products consists of different processing machines Ms that are responsible for processing the product at different stages and queue Qs to handle product movement between different processing stages. In this assignment, we will develop a simulation program to simulate this production line as a queuing network.
 # Features:
 ### The simulation system supports the following features:
 - Users can graphically add Qs and Ms, connect them via UI arbitrarily.
