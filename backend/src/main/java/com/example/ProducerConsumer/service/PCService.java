@@ -97,7 +97,6 @@ public class PCService {
     }
 
     public Queue<Product> getProducts(int queueNo) {
-        List<Product> products = new ArrayList<>();
         return queues.get(queueNo).getQueue();
     }
 

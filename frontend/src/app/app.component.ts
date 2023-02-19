@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import Konva from 'konva';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
@@ -25,9 +25,10 @@ export class AppComponent implements OnInit{
   Producer_num = -1
   arr_of_Machines:Array<Konva.Label> = [] //for displayed objects
   arr_of_Producers:Array<Konva.Label> = [] //for displayed objects
-  arr_of_Products: Product[] = []
+  arr_of_Products: Array<Product[]> = [] //displayed products
   mementoList: Memento[] = []
   timeList: number[] = []
+  numProducts = 0
 
   constructor (private httpService: Httpsevice) {}
 
@@ -43,10 +44,35 @@ export class AppComponent implements OnInit{
     this.stage.on("mousedown",(e) => {
       console.log(e.target.attrs.name)
       if(e.target!=this.stage){
-      this.httpService.getProduct(e.target.attrs.name[1]).subscribe((res)=>{
-        this.arr_of_Products=res
-      })}
+        this.httpService.getProduct(e.target.attrs.name[1]).subscribe((res)=>{
+          this.arr_of_Products[0] = res
+        })
+      }
     });
+  }
+
+  @HostListener('window:keydown.r', ['$event']) r() {
+    this.reset();
+  }
+
+  @HostListener('window:keydown.Control', ['$event']) p() {
+    this.getUnit();
+  }
+
+  @HostListener('window:keydown.Control.r', ['$event']) re() {
+    this.replay();
+  }
+
+  @HostListener('window:keydown.Control.p', ['$event']) prod() {
+    this.drawShape('producer');
+  }
+
+  @HostListener('window:keydown.c', ['$event']) cons() {
+    this.drawShape('machine');
+  }
+
+  @HostListener('window:keydown.l', ['$event']) item() {
+    this.drawShape('item');
   }
 
   reset(){
@@ -83,22 +109,23 @@ export class AppComponent implements OnInit{
       shape2 = this.arr_of_Machines[parseInt(to.value[1])]
       shape1.setAttrs(false).draggable(false)
       shape2.setAttrs(false).draggable(false)
+      first_pointx = shape1.attrs.x + 80
       this.httpService.addLine(parseInt(to.value[1]),parseInt(from.value[1]), true).subscribe()
     } else if(from.value[0] == 'M' && to.value[0] == 'Q'){
       shape1 = this.arr_of_Machines[parseInt(from.value[1])]
       shape2 = this.arr_of_Producers[parseInt(to.value[1])]
       shape1.setAttrs(false).draggable(false)
       shape2.setAttrs(false).draggable(false)
+      first_pointx = shape1.attrs.x + 68
       this.httpService.addLine(parseInt(from.value[1]),parseInt(to.value[1]), false).subscribe()
     } else {
       from.value = ''
       to.value = ''
       return
     }
-    first_pointx = (shape1.attrs.x * 2 + shape1.attrs.width) / 2
-    first_pointy = (shape1.attrs.y * 2 + shape1.attrs.height) / 2
-    second_pointx = (shape2.attrs.x * 2 + shape2.attrs.width) / 2
-    second_pointy = (shape2.attrs.y * 2 + shape2.attrs.height) / 2
+    first_pointy = shape1.attrs.y + 27
+    second_pointx = shape2.attrs.x
+    second_pointy = shape2.attrs.y + 25
     let arrow = new Konva.Arrow({
       points: [first_pointx, first_pointy, second_pointx, second_pointy],
       stroke: '#505050',
@@ -122,7 +149,7 @@ export class AppComponent implements OnInit{
     } else if(type == "machine") {
       this.shape = 'circle'
       this.stage.on("mousedown",(e) => {
-        if(e.target instanceof Konva.Circle) {/*select shape*/}
+        if(e.target instanceof Konva.Circle) { }
         else if(this.shape == 'circle'){
           this.drawShape('circle')
           this.shape = ''
@@ -130,9 +157,10 @@ export class AppComponent implements OnInit{
       });
     } else if(type == "products") {
       let producutCounts = document.getElementById("number_of_products") as HTMLInputElement
-      let count = Number(producutCounts.value)
-      if(count >= 0) {
-        this.httpService.addProducts(count).subscribe()
+      this.numProducts = Number(producutCounts.value)
+      producutCounts.value = ''
+      if(this.numProducts >= 0) {
+        this.httpService.addProducts(this.numProducts).subscribe()
       }
     }
   }
@@ -165,6 +193,7 @@ export class AppComponent implements OnInit{
     while(true){
       let res = await this.httpService.getUnit()
       let machine = res['machines']
+      let queues = res['queues']
       for(let i = 0; i < this.arr_of_Machines.length && machine[i]['currentProduct']!=null ; i++) {
         this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: machine[i]['currentProduct'].color, })
       }
@@ -186,7 +215,6 @@ export class AppComponent implements OnInit{
     this.httpService.getMamentoList().subscribe(async (res) => {
       for(let i = 0; i < res.length; i++) {
         let memento = new Memento()
-        console.log(res[i]['stateQueue'])
         memento.stateMachine = res[i]['stateMachine']
         memento.stateQueue = res[i]['stateQueue']
         this.mementoList.push(memento)
@@ -196,6 +224,13 @@ export class AppComponent implements OnInit{
       let count = 1
       for(let memento of this.mementoList) {
         if(memento.stateMachine.num != -1 && memento.stateMachine.currentProduct != null) {
+          this.arr_of_Products = []
+          for(let i = 0; i < this.Machine_num; i++) {
+            if(this.arr_of_Machines[i].children?.at(0)?.attrs.fill == memento.stateMachine.currentProduct.color) {
+              this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: 'white' })
+              break
+            }
+          }
           this.arr_of_Machines[memento.stateMachine.num].children?.at(0)?.setAttrs({ fill: memento.stateMachine.currentProduct.color, })
           await this.delay(this.timeList[count]);
         }
@@ -208,6 +243,7 @@ export class AppComponent implements OnInit{
     for(let i = 0; i < this.arr_of_Machines.length ; i++) {
       this.arr_of_Machines[i].children?.at(0)?.setAttrs({ fill: "white", })
     }
+    this.mementoList = []
   }
 
   getTime() {

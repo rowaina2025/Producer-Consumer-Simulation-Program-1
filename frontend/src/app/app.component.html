@@ -12,8 +12,8 @@
 </div>
 <div id="container"></div>
 <div class="listinput" id="listinput">
-    <label class="output">products list</label>
-    <div class="b" *ngFor="let item of arr_of_Products; let i = index;">
-        <button> {{item['num']}} </button>
+    <label class="output">Total Products: {{numProducts}}</label>
+    <div class="b" *ngFor="let item of arr_of_Products[0]; let i = index;">
+        <button> {{item[i]}} </button>
     </div>
 </div>

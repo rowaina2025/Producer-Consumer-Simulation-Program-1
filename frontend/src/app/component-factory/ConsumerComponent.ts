@@ -10,15 +10,15 @@ export class ConsumerComponent extends PCComponent{
       x: shapeData.getX(),
       y: shapeData.getY(),
       draggable:true,
-      width: 50,
-      height:50,
+      width: 100,
+      height: 100,
 
     })
     this.consumer.add(
       new Konva.Tag({
         fill: shapeData.getColor(),
         stroke: "black",
-        cornerRadius: 50
+        cornerRadius: 100
       })
     )
     this.consumer.add(
